@@ -16,8 +16,7 @@
 
 /* @flow */
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import startCase from 'lodash.startcase';
+import { Route, Switch } from 'react-router-dom';
 import IconArrowBack from '../../Icon/IconArrowBack';
 import ComponentDoc from './pages/ComponentDoc';
 import ComponentDocExample from './ComponentDocExample';
@@ -102,7 +101,6 @@ export default function Router({ demos }: Props) {
           return <ComponentDoc {...selectedDemo} pageMeta={pageMeta} />;
         }}
       />
-      <Redirect from="/" to="/getting-started" />
     </Switch>
   );
 }
