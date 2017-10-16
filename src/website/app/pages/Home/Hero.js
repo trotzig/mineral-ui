@@ -17,17 +17,31 @@
 /* @flow */
 import React, { Component } from 'react';
 import { createStyledComponent } from '../../../../utils';
+import Section from './Section';
 import triangles from './triangles';
 
-type Props = {};
+type Props = {
+  children?: React$Node
+};
 
 type State = {};
 
-const Container = createStyledComponent('div', {
-  position: 'relative'
+const Root = createStyledComponent(Section, {
+  '& > div': {
+    paddingTop: 0
+  }
 });
 
-const Output = createStyledComponent('div', {
+const Canvas = createStyledComponent('div', {
+  bottom: 0,
+  left: 'calc(-50vw + 50%)',
+  position: 'absolute',
+  right: 'calc(-50vw + 50%)',
+  top: 0,
+  zIndex: '-1'
+});
+
+const Triangles = createStyledComponent('div', {
   bottom: 0,
   left: 0,
   position: 'absolute',
@@ -35,7 +49,7 @@ const Output = createStyledComponent('div', {
   top: 0
 });
 
-export default class Background extends Component<Props, State> {
+export default class Hero extends Component<Props, State> {
   componentDidMount() {
     triangles();
   }
@@ -43,10 +57,14 @@ export default class Background extends Component<Props, State> {
   props: Props;
 
   render() {
+    const { children, ...restProps } = this.props;
     return (
-      <Container id="container" {...this.props}>
-        <Output id="output" />
-      </Container>
+      <Root {...restProps}>
+        <Canvas id="canvas">
+          <Triangles id="triangles" />
+        </Canvas>
+        {children}
+      </Root>
     );
   }
 }
