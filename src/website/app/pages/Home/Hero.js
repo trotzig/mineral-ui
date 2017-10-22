@@ -15,16 +15,13 @@
  */
 
 /* @flow */
-import React, { Component } from 'react';
+import React from 'react';
 import { createStyledComponent } from '../../../../utils';
 import Section from './Section';
-import triangles from './triangles';
 
 type Props = {
   children?: React$Node
 };
-
-type State = {};
 
 const Root = createStyledComponent(Section, {
   '& > div': {
@@ -41,30 +38,15 @@ const Canvas = createStyledComponent('div', {
   zIndex: '-1'
 });
 
-const Triangles = createStyledComponent('div', {
-  bottom: 0,
-  left: 0,
-  position: 'absolute',
-  right: 0,
-  top: 0
-});
-
-export default class Hero extends Component<Props, State> {
-  componentDidMount() {
-    triangles();
-  }
-
-  props: Props;
-
-  render() {
-    const { children, ...restProps } = this.props;
-    return (
-      <Root {...restProps}>
-        <Canvas id="canvas">
-          <Triangles id="triangles" />
-        </Canvas>
-        {children}
-      </Root>
-    );
-  }
+export default function Hero({ children, ...restProps }: Props) {
+  return (
+    <Root {...restProps}>
+      <Canvas id="canvas">
+        <svg className="triangles">
+          <use xlinkHref="#triangles" />
+        </svg>
+      </Canvas>
+      {children}
+    </Root>
+  );
 }

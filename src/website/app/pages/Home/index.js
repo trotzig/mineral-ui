@@ -34,6 +34,7 @@ import Header from './Header';
 import _Hero from './Hero';
 import Section from './Section';
 import ThemePlayground from './ThemePlayground';
+import triangles from './triangles';
 import featureOne from './featureOne.md';
 import featureTwo from './featureTwo.md';
 import first from './first.md';
@@ -201,10 +202,6 @@ const Feature = createStyledComponent(Markdown, {
   anchors: false
 });
 
-const GetStartedSection = createStyledComponent(Section, ({ theme }) => ({
-  backgroundColor: theme.color_gray_100
-}));
-
 const GetStarted = createStyledComponent(Markdown, ({ theme }) => ({
   margin: '0 auto',
   width: 'min-content',
@@ -244,6 +241,78 @@ const GetStarted = createStyledComponent(Markdown, ({ theme }) => ({
     }
   }
 })).withProps({ anchors: false });
+
+const GetStartedBackgrounds = createStyledComponent('div', ({ theme }) => ({
+  '& > :first-child': {
+    // bottom: 0,
+    left: 'calc(-50vw + 50%)',
+    overflow: 'hidden',
+    position: 'absolute',
+    right: 'calc(-50vw + 50%)',
+    top: 0,
+    zIndex: '-2',
+
+    '& > div': {
+      alignItems: 'stretch',
+      display: 'flex',
+      width: '200%',
+
+      '& > div': {
+        flex: '0 0 50%',
+        position: 'relative',
+        width: '50%'
+      },
+
+      '& > :first-child': {
+        backgroundColor: theme.color_gray_100,
+
+        '& > svg': {
+          mixBlendMode: 'luminosity',
+          transform: 'translateX(50%) rotate(180deg) scale(2)'
+        }
+      },
+
+      '& > :last-child': {
+        background: `linear-gradient(
+          rgba(0,0,0,0.25),
+          ${theme.color_gray_100}
+        )`,
+        left: '-50%'
+      }
+    }
+  },
+
+  '& > :last-child': {
+    background: `repeating-linear-gradient(
+      -45deg,
+      rgba(255,255,255,0.05),
+      rgba(255,255,255,0.05) 2px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0) 4px
+    )`,
+    bottom: 0,
+    left: 'calc(-50vw + 50%)',
+    position: 'absolute',
+    right: 'calc(-50vw + 50%)',
+    top: 0,
+    zIndex: '-1'
+  }
+}));
+
+const GetStartedSection = createStyledComponent(Section, ({ theme }) => ({
+  position: 'relative',
+
+  '&::before': {
+    backgroundColor: theme.color_gray_100,
+    bottom: 0,
+    content: '""',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: '-2'
+  }
+}));
 
 const Guidelines = createStyledComponent(Markdown, ({ theme }) => ({
   '@media(max-width: 38.999em)': {
@@ -313,17 +382,64 @@ const Intro = createStyledComponent(Markdown, {
   }
 }).withProps({ anchors: false });
 
-const PlaygroundSection = createStyledComponent(Section, ({ index }) => ({
+const PlaygroundBackground = createStyledComponent('div', ({ index }) => ({
   background: `linear-gradient(
     ${playgroundThemes[index].color_theme_80},
     ${playgroundThemes[index].color_theme_40}
-  )`
+  )`,
+  bottom: 0,
+  left: 'calc(-50vw + 50%)',
+  position: 'absolute',
+  right: 'calc(-50vw + 50%)',
+  top: 0,
+  transform: 'scaleX(-1)',
+  zIndex: '-1',
+
+  '& > svg': {
+    mixBlendMode: 'hard-light',
+    transform: 'scale(2)'
+  }
 }));
+
+const PlaygroundSection = createStyledComponent(Section, ({ index }) => ({
+  position: 'relative',
+
+  '&::before': {
+    background: `linear-gradient(
+      ${playgroundThemes[index].color_theme_80},
+      rgba(0,0,0,0)
+    )`,
+    bottom: 0,
+    content: '""',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0
+  }
+}));
+
+const GetStartedBackground = () => (
+  <GetStartedBackgrounds>
+    <div>
+      <div>
+        <div>
+          <svg className="triangles">
+            <use xlinkHref="#triangles" />
+          </svg>
+        </div>
+        <div />
+      </div>
+    </div>
+    <div />
+  </GetStartedBackgrounds>
+);
 
 export default class Home extends Component<Props, State> {
   props: Props;
 
   state: State;
+
+  changeTheme: any;
 
   constructor(props: Props) {
     super(props);
@@ -334,6 +450,7 @@ export default class Home extends Component<Props, State> {
   }
 
   componentDidMount() {
+    triangles();
     this.rotateThemes(this.state.themeIndex);
   }
 
@@ -380,6 +497,11 @@ export default class Home extends Component<Props, State> {
               <PlaygroundSection
                 index={themeIndex}
                 point={matches ? 1 / 4 : 1 / 1000}>
+                <PlaygroundBackground index={themeIndex}>
+                  <svg className="triangles">
+                    <use xlinkHref="#triangles" />
+                  </svg>
+                </PlaygroundBackground>
                 <ThemePlayground
                   index={themeIndex}
                   setIndex={index => {
@@ -398,6 +520,7 @@ export default class Home extends Component<Props, State> {
                 angle={-5}
                 clipColor={color.white}
                 point={1 / 2}>
+                <GetStartedBackground index={themeIndex} />
                 <ThemeProvider theme={gettingStartedTheme}>
                   <GetStarted scope={{ Buttons, Button, Logo }}>
                     {getStarted}
@@ -410,8 +533,6 @@ export default class Home extends Component<Props, State> {
       </Media>
     );
   }
-
-  changeTheme: any;
 
   rotateThemes = (index: number, isClick?: boolean) => {
     if (isClick) {
