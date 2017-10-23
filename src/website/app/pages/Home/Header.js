@@ -29,6 +29,7 @@ import _Popover from '../../../../Popover';
 import Heading from '../../Heading';
 import _Link from '../../Link';
 import LogotypeHorizontal from '../../LogotypeHorizontal';
+// import { pxToEm } from './index';
 
 type Props = {
   latestPost?: {
@@ -41,57 +42,7 @@ type State = {
   isMenuOpen: boolean
 };
 
-const Root = createStyledComponent('div', ({ isMenuOpen, theme }) => {
-  const transitionProperties = 'ease-in-out 150ms';
-
-  return {
-    alignItems: 'flex-end',
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: `${parseFloat(theme.space_inset_sm) * 16}em`,
-    paddingTop: `${parseFloat(theme.space_inset_sm) * 8}em`,
-
-    '@media(max-width: 38.999em)': {
-      marginBottom: isMenuOpen
-        ? `${parseFloat(theme.space_inset_sm) * 33}em` // Dependent on menu height
-        : `${parseFloat(theme.space_inset_sm) * 8}em`,
-      paddingTop: `${parseFloat(theme.space_inset_sm) * 3}em`,
-      transition: `margin ${transitionProperties}`,
-
-      '& div[id$="popoverContent"]': {
-        marginTop: theme.space_stack_sm,
-        opacity: isMenuOpen ? 1 : 0,
-        transition: `opacity ${transitionProperties}`,
-
-        // CardBlock (tried doing this via theme variables, and it didn't work)
-        '& > div': {
-          margin: 0,
-          padding: 0
-        }
-      }
-    }
-  };
-});
-
-const Link = createStyledComponent(_Link, {
-  fontSize: pxToEm(18)
-});
-
-const Logotype = createStyledComponent(Heading, {
-  lineHeight: 1,
-  margin: 0,
-
-  '@media(min-width: 48em)': {
-    margin: `0 0 0 -33px` // Optical adjustment
-  },
-
-  '& svg': {
-    display: 'block',
-    width: 137
-  }
-});
-
-const ThemedMenuButton = createThemedComponent(Button, ({ theme }) => ({
+const menuButtonTheme = ({ theme }) => ({
   fontFamily: theme.fontFamily_headline,
   Button_color_text_minimal: theme.color_white,
   Button_backgroundColor_minimal_hover: 'transparent',
@@ -99,55 +50,118 @@ const ThemedMenuButton = createThemedComponent(Button, ({ theme }) => ({
   Button_fontWeight: theme.fontWeight_regular,
   Button_height_large: null,
   Button_paddingHorizontal: 0,
-  ButtonContent_fontSize: pxToEm(18)
-}));
-
-const MenuButton = createStyledComponent(ThemedMenuButton, {
-  border: 0,
-  position: 'relative',
-  top: '0.3em', // Optical adjustment for baseline alignment with Logotype
-
-  '&:focus': {
-    color: color.orange_50,
-    boxShadow: 'none'
-  }
+  ButtonContent_fontSize: '1em',
+  ButtonIcon_margin: null
 });
-
-const Popover = createThemedComponent(_Popover, {
+const popoverTheme = {
   PopoverContent_backgroundColor: null,
   PopoverContent_borderColor: 'transparent',
   PopoverContent_borderRadius: null,
-  PopoverContent_boxShadow: null
-});
+  PopoverContent_boxShadow: null,
+  PopoverContent_paddingVertical: null
+};
 
-const StyledNav = createStyledComponent('nav', ({ theme }) => ({
-  '@media(max-width: 38.999em)': {
-    width: '100vw',
+const styles = {
+  root: ({ isMenuOpen, theme }) => {
+    const transitionProperties = 'ease-in-out 150ms';
 
-    '& > a': {
+    return {
+      alignItems: 'flex-end',
+      display: 'flex',
+      justifyContent: 'space-between',
+      marginBottom: theme.baseline_10,
+      paddingTop: theme.baseline_4,
+
+      '@media(max-width: 38.999em)': {
+        marginBottom: isMenuOpen
+          ? '17.5em' // Dependent on menu height
+          : theme.baseline_6,
+        paddingTop: pxToEm(30), // Matches left/right Section Inner padding
+        transition: `margin ${transitionProperties}`,
+
+        '& div[id$="popoverContent"]': {
+          // Matches nav link padding + menuButton optical adjustment
+          marginTop: `${parseFloat(theme.space_stack_sm) + 0.45}em`,
+          opacity: isMenuOpen ? 1 : 0,
+          transition: `opacity ${transitionProperties}`,
+
+          // CardBlock (tried doing this via theme variables, and it didn't work)
+          '& > div': {
+            margin: 0,
+            padding: 0
+          }
+        }
+      }
+    };
+  },
+  link: ({ theme }) => ({
+    fontFamily: theme.fontFamily_headline,
+    fontSize: '1em'
+  }),
+  logotype: {
+    lineHeight: 1,
+    margin: 0,
+
+    '@media(min-width: 48em)': {
+      margin: `0 0 0 -33px` // Optical adjustment
+    },
+
+    '& svg': {
       display: 'block',
-      paddingBottom: theme.space_inset_sm,
-      paddingRight: '3.7em', // Optical adjument to align with MenuButton text
-      paddingTop: theme.space_inset_sm,
-      textAlign: 'right',
+      width: 128, // Reaches to midpoint of a 320-wide viewport
 
-      '&:nth-child(1)': { backgroundColor: 'rgba(0,0,0,0.5)' },
-      '&:nth-child(2)': { backgroundColor: 'rgba(0,0,0,0.42)' },
-      '&:nth-child(3)': { backgroundColor: 'rgba(0,0,0,0.34)' },
-      '&:nth-child(4)': { backgroundColor: 'rgba(0,0,0,0.26)' },
-      '&:nth-child(5)': { backgroundColor: 'rgba(0,0,0,0.18)' }
+      '@media(min-width: 39em)': {
+        width: 157
+      }
     }
   },
-
-  '@media(min-width: 39em)': {
+  menuButton: {
+    border: 0,
     position: 'relative',
-    top: '0.3em', // Optical adjustment for baseline alignment with Logotype
+    top: '0.45em', // Optical adjustment for baseline alignment with Logotype
 
-    '& > a + a': {
-      marginLeft: theme.space_inline_lg
+    '&:focus': {
+      color: color.orange_50,
+      boxShadow: 'none'
     }
-  }
-}));
+  },
+  nav: ({ theme }) => ({
+    '@media(max-width: 38.999em)': {
+      width: '100vw',
+
+      '& > a': {
+        display: 'block',
+        paddingBottom: theme.space_inset_sm,
+        paddingRight: '3.7em', // Optical adjument to align with MenuButton text
+        paddingTop: theme.space_inset_sm,
+        textAlign: 'right',
+
+        '&:nth-child(1)': { backgroundColor: 'rgba(0,0,0,0.5)' },
+        '&:nth-child(2)': { backgroundColor: 'rgba(0,0,0,0.44)' },
+        '&:nth-child(3)': { backgroundColor: 'rgba(0,0,0,0.38)' },
+        '&:nth-child(4)': { backgroundColor: 'rgba(0,0,0,0.32)' },
+        '&:nth-child(5)': { backgroundColor: 'rgba(0,0,0,0.26)' }
+      }
+    },
+
+    '@media(min-width: 39em)': {
+      position: 'relative',
+      top: '0.3em', // Optical adjustment for baseline alignment with Logotype
+
+      '& > a + a': {
+        marginLeft: theme.space_inline_lg
+      }
+    }
+  })
+};
+
+const Root = createStyledComponent('div', styles.root);
+const Link = createStyledComponent(_Link, styles.link);
+const Logotype = createStyledComponent(Heading, styles.logotype);
+const ThemedMenuButton = createThemedComponent(Button, menuButtonTheme);
+const MenuButton = createStyledComponent(ThemedMenuButton, styles.menuButton);
+const Popover = createThemedComponent(_Popover, popoverTheme);
+const StyledNav = createStyledComponent('nav', styles.nav);
 
 const Nav = ({
   latestPost

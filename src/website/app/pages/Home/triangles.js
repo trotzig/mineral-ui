@@ -1082,7 +1082,7 @@ export default function triangles(xPos = 100, yPos = 300) {
     width: 1.5, // 1.2
     height: 1.5, // 1.2
     slices: 100, // 250
-    ambient: '#59728c',
+    ambient: '#777777',
     diffuse: '#FFFFFF'
   };
 
@@ -1094,8 +1094,8 @@ export default function triangles(xPos = 100, yPos = 300) {
     xPos,
     yPos,
     zOffset: 100,
-    ambient: '#293234',
-    diffuse: '#59728c',
+    ambient: '#111111',
+    diffuse: '#777777',
     pickedup: true,
     proxy: false,
     currIndex: 0
@@ -1105,7 +1105,7 @@ export default function triangles(xPos = 100, yPos = 300) {
   // Global Properties
   //------------------------------
   var center = FSS.Vector3.create();
-  var container = document.getElementById('canvas');
+  var container = document.querySelectorAll('.canvas')[0];
   var output = document.head;
   var instances = document.querySelectorAll('.triangles');
   var renderer, scene, mesh, geometry, material;
