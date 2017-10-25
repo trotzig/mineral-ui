@@ -340,8 +340,9 @@ const styles = {
       color: theme.color_text
     },
 
-    '& pre': {
-      backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    // Specificity hack
+    '& pre[class]': {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
       maxHeight: 'none'
     }
   }),
