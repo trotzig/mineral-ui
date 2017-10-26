@@ -19,18 +19,21 @@ import React, { Component } from 'react';
 import Media from 'react-media';
 import desaturate from 'polished/lib/color/desaturate';
 import rgba from 'polished/lib/color/rgba';
+import colors from '../../../../colors';
 import {
-  color,
   createStyledComponent,
-  createThemedComponent,
   getNormalizedValue,
-  mineralTheme,
   pxToEm
-} from '../../../../utils';
+} from '../../../../styles';
+import {
+  createTheme,
+  createThemedComponent,
+  mineralTheme,
+  ThemeProvider
+} from '../../../../themes';
 import Button from '../../../../Button';
 import IconChevronRight from '../../../../Icon/IconChevronRight';
 import IconFavorite from '../../../../Icon/IconFavorite';
-import ThemeProvider from '../../../../ThemeProvider';
 import Link from '../../Link';
 import Logo from '../../Logo';
 import _Markdown from '../../Markdown';
@@ -49,20 +52,11 @@ import guidelines from './content/guidelines.md';
 import intro from './content/intro.md';
 import themePlayground from './content/themePlayground.md';
 
-// Temp
-import magenta from './themes/magenta';
-import teal from './themes/teal';
-import sky from './themes/sky';
-
 type Props = {};
 
 type State = {
   themeIndex: number
 };
-
-// export function pxToEm(value: number) {
-//   return `${value / 18}em`;
-// }
 
 const latestPost = {
   title: 'How we built our site using our components',
@@ -70,24 +64,28 @@ const latestPost = {
 };
 
 const mineralColor = {
-  orange: color.orange_50,
-  orange_active: color.orange_60,
-  orange_focus: color.orange_50,
-  orange_hover: color.orange_40,
-  yellow: color.yellow_50,
-  yellow_active: color.yellow_60,
-  yellow_focus: color.yellow_50,
-  yellow_hover: color.yellow_40,
-  slate: color.slate_60,
-  slate_active: color.slate_70,
-  slate_focus: color.slate_60,
-  slate_hover: color.slate_50
+  orange: colors.orange_50,
+  orange_active: colors.orange_60,
+  orange_focus: colors.orange_50,
+  orange_hover: colors.orange_40,
+  yellow: colors.yellow_50,
+  yellow_active: colors.yellow_60,
+  yellow_focus: colors.yellow_50,
+  yellow_hover: colors.yellow_40,
+  slate: colors.slate_60,
+  slate_active: colors.slate_70,
+  slate_focus: colors.slate_60,
+  slate_hover: colors.slate_50
 };
 
 const playgroundThemes = [
-  { name: 'Magenta', ...magenta, color_text: mineralColor.slate },
-  { name: 'Teal', ...teal, color_text: mineralColor.slate },
-  { name: 'Sky', ...sky, color_text: mineralColor.slate }
+  {
+    name: 'Magenta',
+    ...createTheme('magenta'),
+    color_text: mineralColor.slate
+  },
+  { name: 'Teal', ...createTheme('teal'), color_text: mineralColor.slate },
+  { name: 'Sky', ...createTheme('sky'), color_text: mineralColor.slate }
 ];
 
 const rootTheme = {
@@ -101,6 +99,16 @@ const rootTheme = {
   baseline_8: pxToEm(13 * 8),
   baseline_9: pxToEm(13 * 9),
   baseline_10: pxToEm(13 * 10),
+
+  bp_smallH3AndDown: '@media(max-width: 29.999em)',
+  bp_bigH3: '@media(min-width: 30em)',
+  bp_navCollapsedAndDown: '@media(max-width: 38.999em)',
+  bp_navExpanded: '@media(min-width: 39em)',
+  bp_getStartedLeftAlign: '@media(min-width: 43em)',
+  bp_moreSpacious: '@media(min-width: 48em)',
+  bp_betweenMoreSpaciousAndGuidelinesMultiColumn:
+    '@media(min-width: 48em) and (max-width: 60.999em)',
+  bp_guidelinesMultiColumn: '@media(min-width: 61em)',
 
   color_text: mineralColor.slate,
   fontFamily: null,
@@ -124,7 +132,7 @@ const rootTheme = {
   Heading_lineHeight: '1.1'
 };
 const heroTheme = {
-  color_text: color.white,
+  color_text: colors.white,
 
   Button_backgroundColor_primary: mineralColor.orange,
   Button_backgroundColor_primary_active: mineralColor.orange_active,
@@ -132,26 +140,26 @@ const heroTheme = {
   Button_backgroundColor_primary_hover: mineralColor.orange_hover,
   Button_color_text: mineralColor.slate_active,
 
-  Heading_color_2: color.white,
+  Heading_color_2: colors.white,
 
-  Link_color: color.white,
-  Link_color_active: color.gray_10,
-  Link_color_focus: color.white,
-  Link_color_hover: color.white
+  Link_color: colors.white,
+  Link_color_active: colors.gray_10,
+  Link_color_focus: colors.white,
+  Link_color_hover: colors.white
 };
 const gettingStartedTheme = {
-  color_text: color.white,
+  color_text: colors.white,
 
   Button_backgroundColor_primary: mineralColor.yellow,
   Button_backgroundColor_primary_active: mineralColor.yellow_active,
   Button_backgroundColor_primary_focus: mineralColor.yellow_focus,
   Button_backgroundColor_primary_hover: mineralColor.yellow_hover,
 
-  Button_color_text: color.gray_100,
-  Button_color_text_primary: color.gray_100,
+  Button_color_text: colors.gray_100,
+  Button_color_text_primary: colors.gray_100,
 
-  Heading_color_3: color.white,
-  Heading_color_4: color.white,
+  Heading_color_3: colors.white,
+  Heading_color_4: colors.white,
 
   Link_color: mineralColor.yellow,
   Link_color_active: mineralColor.yellow_active,
@@ -227,7 +235,7 @@ const styles = {
       marginTop: theme.baseline_6
     },
 
-    '@media(min-width: 39em)': {
+    [theme.bp_navExpanded]: {
       flex: `0 0 ${5 / 12 * 100}%`,
       textAlign: 'left',
 
@@ -244,21 +252,21 @@ const styles = {
     padding: theme.baseline_1,
     width: theme.baseline_5
   }),
-  featureSection: {
+  featureSection: ({ theme }) => ({
     // Inner
     '& > div': {
-      '@media(min-width: 39em)': {
+      [theme.bp_navExpanded]: {
         display: 'flex',
         justifyContent: 'space-between'
       }
     }
-  },
+  }),
   floatingRocks: ({ theme }) => ({
     height: 150,
     margin: `0 auto ${theme.baseline_3}`,
     width: 300,
 
-    '@media(min-width: 61em)': {
+    [theme.bp_guidelinesMultiColumn]: {
       height: 300,
       flex: `0 0 300px`,
       order: 2,
@@ -266,7 +274,7 @@ const styles = {
     }
   }),
   getStarted: ({ theme }) => ({
-    // TODO: Specificity hack
+    // Specificity hack
     '& > h3[id]': {
       margin: `0 0 ${getNormalizedValue(
         theme.baseline_6,
@@ -274,7 +282,7 @@ const styles = {
       )}`,
       textAlign: 'center',
 
-      '@media(max-width: 29.999em)': {
+      [theme.bp_smallH3AndDown]: {
         margin: `0 0 ${getNormalizedValue(
           theme.baseline_6,
           theme.Heading_fontSize_3
@@ -294,7 +302,7 @@ const styles = {
       paddingTop: `${2.5 + parseFloat(theme.baseline_1)}em`,
       position: 'relative',
 
-      '@media(min-width: 39em)': {
+      [theme.bp_getStartedLeftAlign]: {
         paddingTop: 0
       },
 
@@ -317,7 +325,7 @@ const styles = {
         transform: 'translateX(-50%)',
         width: '1.5em',
 
-        '@media(min-width: 39em)': {
+        [theme.bp_getStartedLeftAlign]: {
           fontSize: '1em',
           height: '1.5em',
           left: 'auto',
@@ -348,10 +356,6 @@ const styles = {
   }),
   getStartedBackgrounds: ({ theme }) => ({
     '& > :nth-child(1)': {
-      backgroundColor: theme.color_gray_100,
-      bottom: 'auto',
-      zIndex: '-2',
-
       '& > svg': {
         mixBlendMode: 'luminosity',
         transform: 'translateX(50%) rotate(180deg) scale(2)'
@@ -359,19 +363,15 @@ const styles = {
     },
 
     '& > :nth-child(2)': {
-      background: `linear-gradient(
-        rgba(0,0,0,0.4),
-        ${theme.color_gray_100}
-      )`
-    },
-
-    '& > :nth-child(3)': {
       background: `repeating-linear-gradient(
         -45deg,
         rgba(255,255,255,0.025),
         rgba(255,255,255,0.025) 1px,
         rgba(0,0,0,0) 1px,
         rgba(0,0,0,0) 6px
+      ), linear-gradient(
+        rgba(0,0,0,0.4),
+        ${theme.color_gray_100} 75%
       )`
     }
   }),
@@ -380,7 +380,7 @@ const styles = {
     maxWidth: 'min-content',
     textAlign: 'center',
 
-    '@media(min-width: 39em)': {
+    [theme.bp_getStartedLeftAlign]: {
       textAlign: 'left'
     },
 
@@ -394,29 +394,17 @@ const styles = {
   getStartedSection: ({ theme }) => ({
     position: 'relative',
 
-    // TODO: Maybe not necessary?
-    '&::before': {
-      backgroundColor: theme.color_gray_100,
-      bottom: 0,
-      content: '""',
-      left: 0,
-      position: 'absolute',
-      right: 0,
-      top: 0,
-      zIndex: '-2'
-    },
-
     // Inner
     '& > div': {
-      '@media(min-width: 48em)': {
+      [theme.bp_moreSpacious]: {
         paddingTop: theme.baseline_7 // Optical adjustment
       }
     }
   }),
-  guidelines: {
+  guidelines: ({ theme }) => ({
     textAlign: 'center',
 
-    '@media(min-width: 61em)': {
+    [theme.bp_guidelinesMultiColumn]: {
       flex: `1 1 auto`,
       marginLeft: `${1 / 12 * 100}%`,
       marginRight: `${1 / 12 * 100}%`,
@@ -442,11 +430,11 @@ const styles = {
         marginLeft: '6.5em'
       }
     }
-  },
-  guidelinesSection: {
+  }),
+  guidelinesSection: ({ theme }) => ({
     // Inner
     '& > div': {
-      '@media(min-width: 61em)': {
+      [theme.bp_guidelinesMultiColumn]: {
         alignItems: 'center',
         display: 'flex'
       }
@@ -454,32 +442,32 @@ const styles = {
 
     // Guidelines
     '& > div > :last-child': {
-      '@media(min-width: 48em) and (max-width: 60.999em)': {
+      [theme.bp_betweenMoreSpaciousAndGuidelinesMultiColumn]: {
         margin: `0 ${1 / 12 * 100}%`
       }
     }
-  },
-  hero: {
+  }),
+  hero: ({ theme }) => ({
     // Inner
     '> div': {
       paddingTop: 0,
 
-      '@media(min-width: 39em)': {
+      [theme.bp_navExpanded]: {
         justifyContent: 'space-between'
       }
     }
-  },
-  heroCanvas: {
+  }),
+  heroCanvas: ({ theme }) => ({
     backgroundColor: mineralColor.slate,
 
-    '@media(max-width: 38.999em)': {
+    [theme.bp_navCollapsedAndDown]: {
       bottom: '-14.5em' // Matches change in Header margin due to open menu
     },
 
     '& > svg': {
       mixBlendMode: 'hard-light'
     }
-  },
+  }),
   intro: ({ theme }) => ({
     // All of these numbers are dependent on width of h2 content
     '& h2': {
@@ -489,7 +477,7 @@ const styles = {
         theme.Heading_fontSize_2
       )}`,
 
-      '@media(min-width: 48em)': {
+      [theme.bp_moreSpacious]: {
         fontSize: theme.Heading_fontSize_2_wide,
         margin: `0 0 ${getNormalizedValue(
           theme.baseline_2,
@@ -504,13 +492,17 @@ const styles = {
     },
 
     '& > p': {
-      '@media(min-width: 39em)': {
+      [theme.bp_navExpanded]: {
         maxWidth: pxToEm(396)
+      },
+
+      [theme.bp_moreSpacious]: {
+        fontSize: pxToEm(18)
       },
 
       '@media(min-width: 67em)': {
         '&[class]': {
-          maxWidth: pxToEm(611)
+          maxWidth: `${611 / 18}em`
         }
       }
     }
@@ -523,8 +515,8 @@ const styles = {
         theme.Heading_fontSize_3
       )}`,
 
-      // Dependent on h3 content | TODO: test this
-      '@media(min-width: 30em)': {
+      // Dependent on h3 content
+      [theme.bp_bigH3]: {
         fontSize: theme.Heading_fontSize_3_wide,
         margin: `0 0 ${getNormalizedValue(
           theme.baseline_2,
@@ -569,14 +561,14 @@ const styles = {
     '& > div': {
       paddingTop: theme.baseline_3,
 
-      '@media(min-width: 48em)': {
+      [theme.bp_moreSpacious]: {
         paddingTop: theme.baseline_6
       }
     },
 
     // Playground
     '& > div > :last-child': {
-      '@media(min-width: 61em)': {
+      [theme.bp_guidelinesMultiColumn]: {
         margin: `0 ${1 / 12 * 100}%`
       }
     }
@@ -639,7 +631,6 @@ const GetStartedBackground = () => (
   <GetStartedBackgrounds>
     <Canvas />
     <Canvas triangles={false} />
-    <Canvas triangles={false} />
   </GetStartedBackgrounds>
 );
 
@@ -679,7 +670,7 @@ export default class Home extends Component<Props, State> {
                   <Header latestPost={latestPost} />
                   {latestPost &&
                     matches && (
-                      <BlogLink to={latestPost.url}>
+                      <BlogLink href={latestPost.url}>
                         {latestPost.title}
                         <IconChevronRight size="large" />
                       </BlogLink>
@@ -760,7 +751,7 @@ export default class Home extends Component<Props, State> {
               </FeatureSection>
               <GetStartedSection
                 angles={[-5, -5]}
-                clipColor={color.white}
+                clipColor={colors.white}
                 point={1 / 2}>
                 <GetStartedBackground index={themeIndex} />
                 <ThemeProvider theme={gettingStartedTheme}>
@@ -771,11 +762,14 @@ export default class Home extends Component<Props, State> {
                       <LinkButton to="/getting-started" primary>
                         Read the full documentation
                       </LinkButton>
-                      {matches && (
-                        <LinkButton href="https://github.com/mineral-ui/mineral-ui">
-                          View on GitHub
-                        </LinkButton>
-                      )}
+                      <Media
+                        query="(min-width: 43em)"
+                        render={() => (
+                          <LinkButton href="https://github.com/mineral-ui/mineral-ui">
+                            View on GitHub
+                          </LinkButton>
+                        )}
+                      />
                     </Buttons>
                   </GetStartedContent>
                 </ThemeProvider>

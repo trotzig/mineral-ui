@@ -16,7 +16,7 @@
 
 /* @flow */
 import React from 'react';
-import { createStyledComponent, pxToEm } from '../../../../utils';
+import { createStyledComponent, pxToEm } from '../../../../styles';
 
 type Props = {
   angles?: Array<number>,
@@ -58,7 +58,7 @@ const styles = {
         paddingTop,
         position: 'relative',
 
-        '@media(min-width: 48em)': {
+        [theme.bp_moreSpacious]: {
           paddingBottom: paddingBottomWide,
           paddingLeft: paddingHorizontalWide,
           paddingRight: paddingHorizontalWide,

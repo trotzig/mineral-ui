@@ -1,25 +1,24 @@
 import React from 'react';
-import Rock from './Rock';
 import { ParallaxProvider } from 'react-scroll-parallax';
+import { createStyledComponent } from '../../../../styles';
+import Rock from './Rock';
 
 type Props = {
   showRockPile?: boolean
 };
 
+const Root = createStyledComponent('div', {
+  position: 'relative'
+});
+
 export default class Rocks extends React.Component {
   props: Props;
 
-  // TODO: Refactor inline styles to createStyledComponent
   render() {
     const { showRockPile, ...restProps } = this.props;
     return (
       <ParallaxProvider>
-        <div
-          className="Rocks"
-          style={{
-            position: 'relative'
-          }}
-          {...restProps}>
+        <Root {...restProps}>
           {showRockPile && <Rock type="rockpile" size={300} />}
           <Rock
             offsetYMax={showRockPile ? 420 : 270}
@@ -42,7 +41,7 @@ export default class Rocks extends React.Component {
             float
             position={{ left: 190, bottom: showRockPile ? 400 : 110 }}
           />
-        </div>
+        </Root>
       </ParallaxProvider>
     );
   }

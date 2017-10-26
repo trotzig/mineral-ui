@@ -19,7 +19,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { canUseDOM } from 'exenv';
-import { createStyledComponent, pxToEm } from '../../utils';
+import { createStyledComponent, pxToEm } from '../../styles';
 import BaselineGrid from './BaselineGrid';
 import Footer from './Footer';
 import _Nav from './Nav';

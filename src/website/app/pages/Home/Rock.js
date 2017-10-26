@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Parallax } from 'react-scroll-parallax';
+import { createStyledComponent } from '../../../../styles';
 
 type Props = {
   float?: boolean,
@@ -16,6 +17,36 @@ type Context = {
   parallaxController?: {}
 };
 
+const positionStyles = (float, position) => ({
+  position: 'absolute',
+  bottom: float ? position.bottom : 0,
+  left: position ? position.left : 0
+});
+
+const styles = {
+  root: ({ float, position }) => ({
+    ...positionStyles(float, position)
+  }),
+  img: ({ float, position, size }) => {
+    let styles = {
+      height: 'auto',
+      width: size
+    };
+
+    if (!float) {
+      styles = {
+        ...styles,
+        ...positionStyles(float, position)
+      };
+    }
+
+    return styles;
+  }
+};
+
+const Root = createStyledComponent('div', styles.root);
+const Img = createStyledComponent('img', styles.img);
+
 export default class Rock extends Component {
   props: Props;
 
@@ -27,7 +58,6 @@ export default class Rock extends Component {
     float: false
   };
 
-  // TODO: Refactor inline styles to createStyledComponent
   render() {
     const {
       float,
@@ -38,48 +68,26 @@ export default class Rock extends Component {
       ...restProps
     } = this.props;
     const imgSrc = `/images/rocks/${type}.svg`;
+    const rootProps = { float, position, ...restProps };
+    const imgProps = { alt: type, float, position, size, src: imgSrc };
+    const parallaxProps = {
+      offsetYMax: offsetYMax,
+      offsetYMin: 0,
+      offsetXMax: 0,
+      offsetXMin: 0,
+      disabed: !float
+    };
 
     if (float) {
       return (
-        <div
-          className="Rock"
-          style={{
-            position: 'absolute',
-            bottom: float ? position.bottom : 0,
-            left: position ? position.left : 0
-          }}
-          {...restProps}>
-          <Parallax
-            offsetYMax={offsetYMax}
-            offsetYMin={0}
-            offsetXMax={0}
-            offsetXMin={0}
-            disabed={!float}>
-            <img
-              alt={type}
-              src={imgSrc}
-              style={{
-                width: size,
-                height: 'auto'
-              }}
-            />
+        <Root {...rootProps}>
+          <Parallax {...parallaxProps}>
+            <Img {...imgProps} />
           </Parallax>
-        </div>
+        </Root>
       );
     } else {
-      return (
-        <img
-          alt={type}
-          src={imgSrc}
-          style={{
-            width: size,
-            height: 'auto',
-            position: 'absolute',
-            bottom: float ? position.bottom : 0,
-            left: position ? position.left : 0
-          }}
-        />
-      );
+      return <Img {...imgProps} />;
     }
   }
 }

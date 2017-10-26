@@ -17,6 +17,7 @@
 /* @flow */
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import startCase from 'lodash.startcase';
 import IconArrowBack from '../../Icon/IconArrowBack';
 import ComponentDoc from './pages/ComponentDoc';
 import ComponentDocExample from './ComponentDocExample';

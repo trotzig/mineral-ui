@@ -15,7 +15,7 @@
  */
 
 /* @flow */
-import { createStyledComponent, getNormalizedValue } from '../../../../utils';
+import { createStyledComponent, getNormalizedValue } from '../../../../styles';
 import Section from './Section';
 
 export default createStyledComponent(
@@ -40,7 +40,7 @@ export default createStyledComponent(
           )} 0`
         },
 
-        '@media(min-width: 39em)': {
+        [theme.bp_navExpanded]: {
           display: 'flex',
 
           '& > p:last-child': {

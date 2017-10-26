@@ -17,12 +17,9 @@
 /* @flow */
 import React, { Component } from 'react';
 import Media from 'react-media';
-import {
-  color,
-  createStyledComponent,
-  createThemedComponent,
-  pxToEm
-} from '../../../../utils';
+import colors from '../../../../colors';
+import { createStyledComponent, pxToEm } from '../../../../styles';
+import { createThemedComponent } from '../../../../themes';
 import Button from '../../../../Button';
 import IconArrowDropDown from '../../../../Icon/IconArrowDropDown';
 import _Popover from '../../../../Popover';
@@ -72,7 +69,7 @@ const styles = {
       marginBottom: theme.baseline_10,
       paddingTop: theme.baseline_4,
 
-      '@media(max-width: 38.999em)': {
+      [theme.bp_navCollapsedAndDown]: {
         marginBottom: isMenuOpen
           ? '17.5em' // Dependent on menu height
           : theme.baseline_6,
@@ -98,11 +95,11 @@ const styles = {
     fontFamily: theme.fontFamily_headline,
     fontSize: '1em'
   }),
-  logotype: {
+  logotype: ({ theme }) => ({
     lineHeight: 1,
     margin: 0,
 
-    '@media(min-width: 48em)': {
+    [theme.bp_moreSpacious]: {
       margin: `0 0 0 -33px` // Optical adjustment
     },
 
@@ -110,23 +107,23 @@ const styles = {
       display: 'block',
       width: 128, // Reaches to midpoint of a 320-wide viewport
 
-      '@media(min-width: 39em)': {
+      [theme.bp_navExpanded]: {
         width: 157
       }
     }
-  },
+  }),
   menuButton: {
     border: 0,
     position: 'relative',
     top: '0.45em', // Optical adjustment for baseline alignment with Logotype
 
     '&:focus': {
-      color: color.orange_50,
+      color: colors.orange_50,
       boxShadow: 'none'
     }
   },
   nav: ({ theme }) => ({
-    '@media(max-width: 38.999em)': {
+    [theme.bp_navCollapsedAndDown]: {
       width: '100vw',
 
       '& > a': {
@@ -144,7 +141,7 @@ const styles = {
       }
     },
 
-    '@media(min-width: 39em)': {
+    [theme.bp_navExpanded]: {
       position: 'relative',
       top: '0.3em', // Optical adjustment for baseline alignment with Logotype
 
@@ -171,17 +168,17 @@ const Nav = ({
   return (
     <StyledNav>
       <Link to="/color">Guidelines</Link>
-      <Link to="/whats-new">What’s New</Link>
+      <Link to="/roadmap">What’s New</Link>
       <Link to="/component-status">Components</Link>
       <Media
         query="(max-width: 38.999em)"
         render={() =>
-          latestPost && <Link to={latestPost.url}>Latest Blog Post</Link>}
+          latestPost && <Link href={latestPost.url}>Latest Blog Post</Link>}
       />
       <Media
         query="(max-width: 38.999em)"
         render={() => (
-          <Link to="https://github.com/mineral-ui/mineral-ui">
+          <Link href="https://github.com/mineral-ui/mineral-ui">
             View on GitHub
           </Link>
         )}

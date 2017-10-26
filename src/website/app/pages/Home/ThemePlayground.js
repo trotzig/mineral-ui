@@ -16,9 +16,9 @@
 
 /* @flow */
 import React from 'react';
-import { createStyledComponent, pxToEm } from '../../../../utils';
+import { createStyledComponent, pxToEm } from '../../../../styles';
 import IconCheck from '../../../../Icon/IconCheck';
-import ThemeProvider from '../../../../ThemeProvider';
+import { ThemeProvider } from '../../../../themes';
 
 type Props = {
   children: React$Node,
@@ -42,16 +42,24 @@ const styles = {
     zIndex: 2,
 
     '@media(min-width: 23em)': {
-      display: 'grid',
-      gridGap: theme.space_inline_sm,
-      gridTemplateColumns: 'repeat(3, auto)',
-      gridTemplateRows: `min-content auto`
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+
+      '@supports(display: grid)': {
+        display: 'grid',
+        gridGap: theme.space_inline_sm,
+        gridTemplateColumns: 'repeat(3, auto)',
+        gridTemplateRows: `min-content auto`
+      }
     },
 
-    '@media(min-width: 48em)': {
-      gridGap: theme.space_inline_md,
-      gridTemplateColumns: 'min-content auto',
-      gridTemplateRows: 'repeat(3, auto)'
+    [theme.bp_moreSpacious]: {
+      '@supports(display: grid)': {
+        gridGap: theme.space_inline_md,
+        gridTemplateColumns: 'min-content auto',
+        gridTemplateRows: 'repeat(3, auto)'
+      }
     }
   }),
   optionRoot: ({ isActive, theme, themes, thisIndex }) => ({
@@ -75,9 +83,13 @@ const styles = {
     },
 
     '@media(min-width: 23em)': {
-      marginBottom: 0,
+      flex: `0 0 calc(33.333% - 2 * ${theme.space_inline_sm} / 3)`,
       padding: theme.space_inset_sm,
-      justifyContent: 'center'
+      justifyContent: 'center',
+
+      '@supports(display: grid)': {
+        marginBottom: 0
+      }
     },
 
     '@media(min-width: 29em)': {
@@ -133,7 +145,7 @@ const styles = {
     gridColumn: '1 / span 3',
     padding: `${theme.space_inset_lg} ${pxToEm(28)}`,
 
-    '@media(min-width: 48em)': {
+    [theme.bp_moreSpacious]: {
       gridColumn: 2,
       gridRow: '1 / span 4'
     },
@@ -202,11 +214,6 @@ const Option = ({
   );
 };
 
-const handleClick = (fn: () => void) => {
-  fn();
-  // TODO: blur here
-};
-
 export default function ThemePlaygound({
   children,
   index,
@@ -224,9 +231,7 @@ export default function ThemePlaygound({
           const optionProps = {
             isActive: index === i,
             key: i,
-            onClick: () => {
-              handleClick(() => setIndex(i));
-            },
+            onClick: () => setIndex(i),
             themes: themes,
             thisIndex: i
           };
