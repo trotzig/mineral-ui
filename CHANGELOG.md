@@ -1,3 +1,8 @@
+<a name="0.10.0-413-react-updates.0"></a>
+# [0.10.0-413-react-updates.0](https://github.com/mineral-ui/mineral-ui/compare/v0.9.0...v0.10.0-413-react-updates.0) (2017-10-27)
+
+
+
 <a name="0.9.0"></a>
 # [0.9.0](https://github.com/mineral-ui/mineral-ui/compare/v0.8.0...v0.9.0) (2017-10-27)
 
