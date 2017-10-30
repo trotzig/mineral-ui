@@ -69,7 +69,7 @@ const styles = {
       marginBottom: theme.baseline_10,
       paddingTop: theme.baseline_4,
 
-      [theme.bp_navCollapsedAndDown]: {
+      [theme.bp_home_navCollapsedAndDown]: {
         marginBottom: isMenuOpen
           ? '17.5em' // Dependent on menu height
           : theme.baseline_6,
@@ -107,7 +107,7 @@ const styles = {
       display: 'block',
       width: 128, // Reaches to midpoint of a 320-wide viewport
 
-      [theme.bp_navExpanded]: {
+      [theme.bp_home_navExpanded]: {
         width: 157
       }
     }
@@ -123,7 +123,7 @@ const styles = {
     }
   },
   nav: ({ theme }) => ({
-    [theme.bp_navCollapsedAndDown]: {
+    [theme.bp_home_navCollapsedAndDown]: {
       width: '100vw',
 
       '& > a': {
@@ -141,7 +141,7 @@ const styles = {
       }
     },
 
-    [theme.bp_navExpanded]: {
+    [theme.bp_home_navExpanded]: {
       position: 'relative',
       top: '0.3em', // Optical adjustment for baseline alignment with Logotype
 

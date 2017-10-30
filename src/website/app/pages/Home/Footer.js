@@ -40,7 +40,7 @@ export default createStyledComponent(
           )} 0`
         },
 
-        [theme.bp_navExpanded]: {
+        [theme.bp_home_navExpanded]: {
           display: 'flex',
 
           '& > p:last-child': {

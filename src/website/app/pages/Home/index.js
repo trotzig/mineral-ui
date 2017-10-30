@@ -31,12 +31,13 @@ import {
   mineralTheme,
   ThemeProvider
 } from '../../../../themes';
-import Button from '../../../../Button';
+import _Button from '../../../../Button';
 import IconChevronRight from '../../../../Icon/IconChevronRight';
 import IconFavorite from '../../../../Icon/IconFavorite';
 import Link from '../../Link';
 import Logo from '../../Logo';
 import _Markdown from '../../Markdown';
+import siteColors from '../../siteColors';
 import Canvas from './Canvas';
 import Footer from './Footer';
 import Header from './Header';
@@ -63,82 +64,24 @@ const latestPost = {
   url: 'https://medium.com'
 };
 
-const mineralColor = {
-  orange: colors.orange_50,
-  orange_active: colors.orange_60,
-  orange_focus: colors.orange_50,
-  orange_hover: colors.orange_40,
-  yellow: colors.yellow_50,
-  yellow_active: colors.yellow_60,
-  yellow_focus: colors.yellow_50,
-  yellow_hover: colors.yellow_40,
-  slate: colors.slate_60,
-  slate_active: colors.slate_70,
-  slate_focus: colors.slate_60,
-  slate_hover: colors.slate_50
-};
-
 const playgroundThemes = [
   {
     name: 'Magenta',
     ...createTheme('magenta'),
-    color_text: mineralColor.slate
+    color_text: siteColors.slate
   },
-  { name: 'Teal', ...createTheme('teal'), color_text: mineralColor.slate },
-  { name: 'Sky', ...createTheme('sky'), color_text: mineralColor.slate }
+  { name: 'Teal', ...createTheme('teal'), color_text: siteColors.slate },
+  { name: 'Sky', ...createTheme('sky'), color_text: siteColors.slate }
 ];
 
-const rootTheme = {
-  baseline_1: pxToEm(13),
-  baseline_2: pxToEm(13 * 2),
-  baseline_3: pxToEm(13 * 3),
-  baseline_4: pxToEm(13 * 4),
-  baseline_5: pxToEm(13 * 5),
-  baseline_6: pxToEm(13 * 6),
-  baseline_7: pxToEm(13 * 7),
-  baseline_8: pxToEm(13 * 8),
-  baseline_9: pxToEm(13 * 9),
-  baseline_10: pxToEm(13 * 10),
-
-  bp_smallH3AndDown: '@media(max-width: 29.999em)',
-  bp_bigH3: '@media(min-width: 30em)',
-  bp_navCollapsedAndDown: '@media(max-width: 38.999em)',
-  bp_navExpanded: '@media(min-width: 39em)',
-  bp_getStartedLeftAlign: '@media(min-width: 43em)',
-  bp_moreSpacious: '@media(min-width: 48em)',
-  bp_betweenMoreSpaciousAndGuidelinesMultiColumn:
-    '@media(min-width: 48em) and (max-width: 60.999em)',
-  bp_guidelinesMultiColumn: '@media(min-width: 61em)',
-
-  color_text: mineralColor.slate,
-  fontFamily: null,
-  fontFamily_headline: `franklin-gothic-urw, ${mineralTheme.fontFamily_system}`,
-
-  Button_fontWeight: mineralTheme.fontWeight_regular,
-  Button_height_jumbo: pxToEm(39),
-  Button_paddingHorizontal: pxToEm(16), // For a total of 32
-  ButtonContent_fontSize: pxToEm(19),
-
-  Heading_color_3: mineralColor.orange,
-  Heading_fontFamily: `franklin-gothic-urw, ${mineralTheme.fontFamily_system}`,
-  Heading_fontSize_2: pxToEm(39),
-  Heading_fontSize_2_wide: pxToEm(59),
-  Heading_fontSize_3: pxToEm(26),
-  Heading_fontSize_3_wide: pxToEm(37),
-  Heading_fontWeight_1: '300',
-  Heading_fontWeight_2: '300',
-  Heading_fontWeight_3: '300',
-  Heading_fontWeight_4: '500',
-  Heading_lineHeight: '1.1'
-};
 const heroTheme = {
   color_text: colors.white,
 
-  Button_backgroundColor_primary: mineralColor.orange,
-  Button_backgroundColor_primary_active: mineralColor.orange_active,
-  Button_backgroundColor_primary_focus: mineralColor.orange_focus,
-  Button_backgroundColor_primary_hover: mineralColor.orange_hover,
-  Button_color_text: mineralColor.slate_active,
+  Button_backgroundColor_primary: siteColors.orange,
+  Button_backgroundColor_primary_active: siteColors.orange_active,
+  Button_backgroundColor_primary_focus: siteColors.orange_focus,
+  Button_backgroundColor_primary_hover: siteColors.orange_hover,
+  Button_color_text: siteColors.slate_active,
 
   Heading_color_2: colors.white,
 
@@ -150,10 +93,10 @@ const heroTheme = {
 const gettingStartedTheme = {
   color_text: colors.white,
 
-  Button_backgroundColor_primary: mineralColor.yellow,
-  Button_backgroundColor_primary_active: mineralColor.yellow_active,
-  Button_backgroundColor_primary_focus: mineralColor.yellow_focus,
-  Button_backgroundColor_primary_hover: mineralColor.yellow_hover,
+  Button_backgroundColor_primary: siteColors.yellow,
+  Button_backgroundColor_primary_active: siteColors.yellow_active,
+  Button_backgroundColor_primary_focus: siteColors.yellow_focus,
+  Button_backgroundColor_primary_hover: siteColors.yellow_hover,
 
   Button_color_text: colors.gray_100,
   Button_color_text_primary: colors.gray_100,
@@ -161,17 +104,23 @@ const gettingStartedTheme = {
   Heading_color_3: colors.white,
   Heading_color_4: colors.white,
 
-  Link_color: mineralColor.yellow,
-  Link_color_active: mineralColor.yellow_active,
-  Link_color_focus: mineralColor.yellow_focus,
-  Link_color_hover: mineralColor.yellow_hover
+  Link_color: siteColors.yellow,
+  Link_color_active: siteColors.yellow_active,
+  Link_color_focus: siteColors.yellow_focus,
+  Link_color_hover: siteColors.yellow_hover
+};
+const buttonTheme = {
+  Button_fontWeight: mineralTheme.fontWeight_regular,
+  Button_height_jumbo: pxToEm(39),
+  Button_paddingHorizontal: pxToEm(16), // For a total of 32
+  ButtonContent_fontSize: pxToEm(19)
 };
 const CTALinkTheme = {
-  Link_borderColor_focus: mineralColor.orange_focus,
-  Link_color: mineralColor.orange,
-  Link_color_active: mineralColor.orange_active,
-  Link_color_hover: mineralColor.orange_hover,
-  Link_color_focus: mineralColor.orange_focus
+  Link_borderColor_focus: siteColors.orange_focus,
+  Link_color: siteColors.orange,
+  Link_color_active: siteColors.orange_active,
+  Link_color_hover: siteColors.orange_hover,
+  Link_color_focus: siteColors.orange_focus
 };
 
 const styles = {
@@ -191,7 +140,7 @@ const styles = {
     },
 
     '&::before': {
-      backgroundColor: mineralColor.orange_active,
+      backgroundColor: siteColors.orange_active,
       borderRadius: theme.borderRadius_1,
       content: 'New',
       fontSize: '0.8em',
@@ -235,7 +184,7 @@ const styles = {
       marginTop: theme.baseline_6
     },
 
-    [theme.bp_navExpanded]: {
+    [theme.bp_home_navExpanded]: {
       flex: `0 0 ${5 / 12 * 100}%`,
       textAlign: 'left',
 
@@ -255,7 +204,7 @@ const styles = {
   featureSection: ({ theme }) => ({
     // Inner
     '& > div': {
-      [theme.bp_navExpanded]: {
+      [theme.bp_home_navExpanded]: {
         display: 'flex',
         justifyContent: 'space-between'
       }
@@ -266,7 +215,7 @@ const styles = {
     margin: `0 auto ${theme.baseline_3}`,
     width: 300,
 
-    [theme.bp_guidelinesMultiColumn]: {
+    [theme.bp_home_guidelinesMultiColumn]: {
       height: 300,
       flex: `0 0 300px`,
       order: 2,
@@ -282,7 +231,7 @@ const styles = {
       )}`,
       textAlign: 'center',
 
-      [theme.bp_smallH3AndDown]: {
+      [theme.bp_home_smallH3AndDown]: {
         margin: `0 0 ${getNormalizedValue(
           theme.baseline_6,
           theme.Heading_fontSize_3
@@ -302,7 +251,7 @@ const styles = {
       paddingTop: `${2.5 + parseFloat(theme.baseline_1)}em`,
       position: 'relative',
 
-      [theme.bp_getStartedLeftAlign]: {
+      [theme.bp_home_getStartedLeftAlign]: {
         paddingTop: 0
       },
 
@@ -311,7 +260,7 @@ const styles = {
       },
 
       '&::before': {
-        backgroundColor: mineralColor.yellow,
+        backgroundColor: siteColors.yellow,
         borderRadius: '0.75em',
         content: 'counter(getStarted)',
         color: theme.color_gray_100,
@@ -325,7 +274,7 @@ const styles = {
         transform: 'translateX(-50%)',
         width: '1.5em',
 
-        [theme.bp_getStartedLeftAlign]: {
+        [theme.bp_home_getStartedLeftAlign]: {
           fontSize: '1em',
           height: '1.5em',
           left: 'auto',
@@ -380,7 +329,7 @@ const styles = {
     maxWidth: 'min-content',
     textAlign: 'center',
 
-    [theme.bp_getStartedLeftAlign]: {
+    [theme.bp_home_getStartedLeftAlign]: {
       textAlign: 'left'
     },
 
@@ -404,7 +353,7 @@ const styles = {
   guidelines: ({ theme }) => ({
     textAlign: 'center',
 
-    [theme.bp_guidelinesMultiColumn]: {
+    [theme.bp_home_guidelinesMultiColumn]: {
       flex: `1 1 auto`,
       marginLeft: `${1 / 12 * 100}%`,
       marginRight: `${1 / 12 * 100}%`,
@@ -434,7 +383,7 @@ const styles = {
   guidelinesSection: ({ theme }) => ({
     // Inner
     '& > div': {
-      [theme.bp_guidelinesMultiColumn]: {
+      [theme.bp_home_guidelinesMultiColumn]: {
         alignItems: 'center',
         display: 'flex'
       }
@@ -442,7 +391,7 @@ const styles = {
 
     // Guidelines
     '& > div > :last-child': {
-      [theme.bp_betweenMoreSpaciousAndGuidelinesMultiColumn]: {
+      [theme.bp_home_betweenMoreSpaciousAndGuidelinesMultiColumn]: {
         margin: `0 ${1 / 12 * 100}%`
       }
     }
@@ -452,15 +401,15 @@ const styles = {
     '> div': {
       paddingTop: 0,
 
-      [theme.bp_navExpanded]: {
+      [theme.bp_home_navExpanded]: {
         justifyContent: 'space-between'
       }
     }
   }),
   heroCanvas: ({ theme }) => ({
-    backgroundColor: mineralColor.slate,
+    backgroundColor: siteColors.slate,
 
-    [theme.bp_navCollapsedAndDown]: {
+    [theme.bp_home_navCollapsedAndDown]: {
       bottom: '-14.5em' // Matches change in Header margin due to open menu
     },
 
@@ -492,7 +441,7 @@ const styles = {
     },
 
     '& > p': {
-      [theme.bp_navExpanded]: {
+      [theme.bp_home_navExpanded]: {
         maxWidth: pxToEm(396)
       },
 
@@ -516,7 +465,7 @@ const styles = {
       )}`,
 
       // Dependent on h3 content
-      [theme.bp_bigH3]: {
+      [theme.bp_home_bigH3]: {
         fontSize: theme.Heading_fontSize_3_wide,
         margin: `0 0 ${getNormalizedValue(
           theme.baseline_2,
@@ -568,7 +517,7 @@ const styles = {
 
     // Playground
     '& > div > :last-child': {
-      [theme.bp_guidelinesMultiColumn]: {
+      [theme.bp_home_guidelinesMultiColumn]: {
         margin: `0 ${1 / 12 * 100}%`
       }
     }
@@ -587,10 +536,7 @@ const Markdown = createStyledComponent(_Markdown, styles.markdown).withProps({
   anchors: false
 });
 const BlogLink = createStyledComponent(Link, styles.blogLink);
-const LinkButton = createStyledComponent(Button, styles.button).withProps({
-  element: Link,
-  size: 'jumbo'
-});
+const Button = createThemedComponent(_Button, buttonTheme);
 const Buttons = createStyledComponent('div', styles.buttons);
 const ThemedCTALink = createThemedComponent(Link, CTALinkTheme);
 const CTALink = createStyledComponent(ThemedCTALink, styles.CTALink);
@@ -621,6 +567,10 @@ const GuidelinesSection = createStyledComponent(
 const Hero = createStyledComponent(Section, styles.hero);
 const HeroCanvas = createStyledComponent(Canvas, styles.heroCanvas);
 const Intro = createStyledComponent(Markdown, styles.intro);
+const LinkButton = createStyledComponent(Button, styles.button).withProps({
+  element: Link,
+  size: 'jumbo'
+});
 const PlaygroundCanvas = createStyledComponent(Canvas, styles.playgroundCanvas);
 const PlaygroundSection = createStyledComponent(
   Section,
@@ -660,127 +610,125 @@ export default class Home extends Component<Props, State> {
     return (
       <Media query="(min-width: 39em)">
         {matches => (
-          <ThemeProvider theme={rootTheme}>
-            <Root>
-              <ThemeProvider theme={heroTheme}>
-                <Hero
-                  angles={matches ? [7, 8] : [5, 5]}
-                  point={matches ? 1 / 4 : 1 / 1000}>
-                  <HeroCanvas />
-                  <Header latestPost={latestPost} />
-                  {latestPost &&
-                    matches && (
-                      <BlogLink href={latestPost.url}>
-                        {latestPost.title}
-                        <IconChevronRight size="large" />
-                      </BlogLink>
-                    )}
-                  <Intro>{intro}</Intro>
+          <Root>
+            <ThemeProvider theme={heroTheme}>
+              <Hero
+                angles={matches ? [7, 8] : [5, 5]}
+                point={matches ? 1 / 4 : 1 / 1000}>
+                <HeroCanvas />
+                <Header latestPost={latestPost} />
+                {latestPost &&
+                  matches && (
+                    <BlogLink href={latestPost.url}>
+                      {latestPost.title}
+                      <IconChevronRight size="large" />
+                    </BlogLink>
+                  )}
+                <Intro>{intro}</Intro>
+                <Buttons>
+                  <LinkButton to="/getting-started" primary>
+                    Get Started
+                  </LinkButton>
+                  {matches && (
+                    <LinkButton href="https://github.com/mineral-ui/mineral-ui">
+                      View on GitHub
+                    </LinkButton>
+                  )}
+                </Buttons>
+              </Hero>
+            </ThemeProvider>
+            <GuidelinesSection
+              angles={[5, 5]}
+              // $FlowFixMe
+              clipColor={desaturate(
+                0.2,
+                playgroundThemes[themeIndex].color_theme_60
+              )}
+              point={matches ? 3 / 4 : 999 / 1000}>
+              <Media query="(min-width: 61em)">
+                {matches => <FloatingRocks showRockPile={matches} />}
+              </Media>
+              <Guidelines scope={{ CTALink, IconChevronRight }}>
+                {guidelines}
+              </Guidelines>
+            </GuidelinesSection>
+            <PlaygroundSection
+              angles={[5, 3]}
+              index={themeIndex}
+              point={matches ? 1 / 4 : 1 / 1000}>
+              <PlaygroundCanvas index={themeIndex} />
+              <ThemePlayground
+                index={themeIndex}
+                setIndex={index => {
+                  this.setThemeIndex(index, true);
+                }}
+                themes={playgroundThemes}>
+                <Media query="(min-width: 23em)">
+                  {matches => {
+                    const playgroundButtonIcon = matches ? (
+                      <IconFavorite />
+                    ) : (
+                      undefined
+                    );
+
+                    return (
+                      <Markdown
+                        anchors={false}
+                        scope={{ LinkButton, Link, playgroundButtonIcon }}>
+                        {themePlayground}
+                      </Markdown>
+                    );
+                  }}
+                </Media>
+              </ThemePlayground>
+            </PlaygroundSection>
+            <FeatureSection>
+              <Feature>
+                <FeatureImg
+                  circleFill="#efdaf4"
+                  src="/images/rocks/accessibility.svg"
+                />
+                <Markdown>{accessibility}</Markdown>
+              </Feature>
+              <Feature>
+                <FeatureImg
+                  circleFill="#d6ebdf"
+                  src="/images/rocks/dropInReady.svg"
+                />
+                <Markdown>{dropInComponents}</Markdown>
+              </Feature>
+            </FeatureSection>
+            <GetStartedSection
+              angles={[-5, -5]}
+              clipColor={colors.white}
+              point={1 / 2}>
+              <GetStartedBackground index={themeIndex} />
+              <ThemeProvider theme={gettingStartedTheme}>
+                <GetStartedContent>
+                  <Logo fill="#fff" />
+                  <GetStarted scope={{ Logo }}>{getStarted}</GetStarted>
                   <Buttons>
                     <LinkButton to="/getting-started" primary>
-                      Get Started
+                      Read the full documentation
                     </LinkButton>
-                    {matches && (
-                      <LinkButton href="https://github.com/mineral-ui/mineral-ui">
-                        View on GitHub
-                      </LinkButton>
-                    )}
+                    <Media
+                      query="(min-width: 43em)"
+                      render={() => (
+                        <LinkButton href="https://github.com/mineral-ui/mineral-ui">
+                          View on GitHub
+                        </LinkButton>
+                      )}
+                    />
                   </Buttons>
-                </Hero>
+                </GetStartedContent>
               </ThemeProvider>
-              <GuidelinesSection
-                angles={[5, 5]}
-                // $FlowFixMe
-                clipColor={desaturate(
-                  0.2,
-                  playgroundThemes[themeIndex].color_theme_60
-                )}
-                point={matches ? 3 / 4 : 999 / 1000}>
-                <Media query="(min-width: 61em)">
-                  {matches => <FloatingRocks showRockPile={matches} />}
-                </Media>
-                <Guidelines scope={{ CTALink, IconChevronRight }}>
-                  {guidelines}
-                </Guidelines>
-              </GuidelinesSection>
-              <PlaygroundSection
-                angles={[5, 3]}
-                index={themeIndex}
-                point={matches ? 1 / 4 : 1 / 1000}>
-                <PlaygroundCanvas index={themeIndex} />
-                <ThemePlayground
-                  index={themeIndex}
-                  setIndex={index => {
-                    this.setThemeIndex(index, true);
-                  }}
-                  themes={playgroundThemes}>
-                  <Media query="(min-width: 23em)">
-                    {matches => {
-                      const playgroundButtonIcon = matches ? (
-                        <IconFavorite />
-                      ) : (
-                        undefined
-                      );
-
-                      return (
-                        <Markdown
-                          anchors={false}
-                          scope={{ LinkButton, Link, playgroundButtonIcon }}>
-                          {themePlayground}
-                        </Markdown>
-                      );
-                    }}
-                  </Media>
-                </ThemePlayground>
-              </PlaygroundSection>
-              <FeatureSection>
-                <Feature>
-                  <FeatureImg
-                    circleFill="#efdaf4"
-                    src="/images/rocks/accessibility.svg"
-                  />
-                  <Markdown>{accessibility}</Markdown>
-                </Feature>
-                <Feature>
-                  <FeatureImg
-                    circleFill="#d6ebdf"
-                    src="/images/rocks/dropInReady.svg"
-                  />
-                  <Markdown>{dropInComponents}</Markdown>
-                </Feature>
-              </FeatureSection>
-              <GetStartedSection
-                angles={[-5, -5]}
-                clipColor={colors.white}
-                point={1 / 2}>
-                <GetStartedBackground index={themeIndex} />
-                <ThemeProvider theme={gettingStartedTheme}>
-                  <GetStartedContent>
-                    <Logo fill="#fff" />
-                    <GetStarted scope={{ Logo }}>{getStarted}</GetStarted>
-                    <Buttons>
-                      <LinkButton to="/getting-started" primary>
-                        Read the full documentation
-                      </LinkButton>
-                      <Media
-                        query="(min-width: 43em)"
-                        render={() => (
-                          <LinkButton href="https://github.com/mineral-ui/mineral-ui">
-                            View on GitHub
-                          </LinkButton>
-                        )}
-                      />
-                    </Buttons>
-                  </GetStartedContent>
-                </ThemeProvider>
-              </GetStartedSection>
-              <ThemeProvider theme={gettingStartedTheme}>
-                <Footer>
-                  <Markdown>{footer}</Markdown>
-                </Footer>
-              </ThemeProvider>
-            </Root>
-          </ThemeProvider>
+            </GetStartedSection>
+            <ThemeProvider theme={gettingStartedTheme}>
+              <Footer>
+                <Markdown>{footer}</Markdown>
+              </Footer>
+            </ThemeProvider>
+          </Root>
         )}
       </Media>
     );

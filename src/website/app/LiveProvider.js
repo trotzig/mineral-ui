@@ -25,6 +25,7 @@ import {
   LivePreview
 } from 'react-live';
 import { createStyledComponent, getNormalizedValue } from '../../styles';
+import { ThemeProvider } from '../../themes';
 
 type Props = {
   backgroundColor?: string,
@@ -100,16 +101,19 @@ export default function LiveProvider({
           <link rel="canonical" href={pageMeta.canonicalLink} />
         </Helmet>
       )}
-      <ReactLiveProvider
-        code={dedent(source)}
-        scope={scope}
-        mountStylesheet={false}>
-        <MyLivePreview
-          backgroundColor={backgroundColor}
-          chromeless={chromeless}
-        />
-        {!hideSource && [<MyLiveEditor key={0} />, <MyLiveError key={1} />]}
-      </ReactLiveProvider>
+      {/* Undo any site theme customization */}
+      <ThemeProvider>
+        <ReactLiveProvider
+          code={dedent(source)}
+          scope={scope}
+          mountStylesheet={false}>
+          <MyLivePreview
+            backgroundColor={backgroundColor}
+            chromeless={chromeless}
+          />
+          {!hideSource && [<MyLiveEditor key={0} />, <MyLiveError key={1} />]}
+        </ReactLiveProvider>
+      </ThemeProvider>
     </div>
   );
 }

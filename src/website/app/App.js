@@ -20,10 +20,12 @@ import { withRouter } from 'react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { canUseDOM } from 'exenv';
 import { createStyledComponent, pxToEm } from '../../styles';
+import { mineralTheme, ThemeProvider } from '../../themes';
 import BaselineGrid from './BaselineGrid';
 import Footer from './Footer';
 import _Nav from './Nav';
 import Router from './Router';
+import siteColors from './siteColors';
 import createKeyMap from './utils/createKeyMap';
 import ComponentDoc from './pages/ComponentDoc';
 import Home from './pages/Home';
@@ -36,6 +38,49 @@ type Props = {
   demos: Object | Array<Object>,
   history: Object,
   location?: any
+};
+
+const rootTheme = {
+  baseline_1: pxToEm(13),
+  baseline_2: pxToEm(13 * 2),
+  baseline_3: pxToEm(13 * 3),
+  baseline_4: pxToEm(13 * 4),
+  baseline_5: pxToEm(13 * 5),
+  baseline_6: pxToEm(13 * 6),
+  baseline_7: pxToEm(13 * 7),
+  baseline_8: pxToEm(13 * 8),
+  baseline_9: pxToEm(13 * 9),
+  baseline_10: pxToEm(13 * 10),
+
+  bp_moreSpacious: '@media(min-width: 48em)',
+
+  bp_home_smallH3AndDown: '@media(max-width: 29.999em)',
+  bp_home_bigH3: '@media(min-width: 30em)',
+  bp_home_navCollapsedAndDown: '@media(max-width: 38.999em)',
+  bp_home_navExpanded: '@media(min-width: 39em)',
+  bp_home_getStartedLeftAlign: '@media(min-width: 43em)',
+  bp_home_betweenMoreSpaciousAndGuidelinesMultiColumn:
+    '@media(min-width: 48em) and (max-width: 60.999em)',
+  bp_home_guidelinesMultiColumn: '@media(min-width: 61em)',
+
+  color_text: siteColors.slate_active,
+  fontFamily: null,
+  fontFamily_headline: `franklin-gothic-urw, ${mineralTheme.fontFamily_system}`,
+
+  // TODO: These will cause issues with future Heading component examples. Maybe
+  //       Make rename site's Heading component and its theme variables to
+  //       SiteHeading? Same treatment for Link?
+  Heading_color_3: siteColors.orange,
+  Heading_fontFamily: `franklin-gothic-urw, ${mineralTheme.fontFamily_system}`,
+  Heading_fontSize_2: pxToEm(39),
+  Heading_fontSize_2_wide: pxToEm(59),
+  Heading_fontSize_3: pxToEm(26),
+  Heading_fontSize_3_wide: pxToEm(37),
+  Heading_fontWeight_1: '300',
+  Heading_fontWeight_2: '300',
+  Heading_fontWeight_3: '300',
+  Heading_fontWeight_4: '500',
+  Heading_lineHeight: '1.1'
 };
 
 const styles = {
@@ -110,34 +155,36 @@ class App extends Component<Props> {
       : demos;
 
     return (
-      <div>
-        <Switch>
-          <Route
-            exact
-            strict
-            path="/:url*"
-            render={props => <Redirect to={`${props.location.pathname}/`} />}
-          />
-          <Route path="/" exact component={Home} />
-          <Route
-            render={route => {
-              const isChromeless = route.location.search === '?chromeless';
-              return isChromeless ? (
-                <Router demos={siteDemos} />
-              ) : (
-                <Root className={className}>
-                  <Nav demos={siteDemos} />
-                  <Main>
-                    <Router demos={siteDemos} />
-                    <Footer />
-                  </Main>
-                </Root>
-              );
-            }}
-          />
-        </Switch>
-        <BaselineGrid />
-      </div>
+      <ThemeProvider theme={rootTheme}>
+        <div>
+          <Switch>
+            <Route
+              exact
+              strict
+              path="/:url*"
+              render={props => <Redirect to={`${props.location.pathname}/`} />}
+            />
+            <Route path="/" exact component={Home} />
+            <Route
+              render={route => {
+                const isChromeless = route.location.search === '?chromeless';
+                return isChromeless ? (
+                  <Router demos={siteDemos} />
+                ) : (
+                  <Root className={className}>
+                    <Nav demos={siteDemos} />
+                    <Main>
+                      <Router demos={siteDemos} />
+                      <Footer />
+                    </Main>
+                  </Root>
+                );
+              }}
+            />
+          </Switch>
+          <BaselineGrid />
+        </div>
+      </ThemeProvider>
     );
   }
 }
