@@ -18,7 +18,7 @@
 import React from 'react';
 import { createStyledComponent, getNormalizedValue } from '../../../../styles';
 import Markdown from '../../Markdown';
-import _Heading from '../../Heading';
+import _Heading from '../../SiteHeading';
 
 type Props = {
   backgroundColor?: string,

@@ -17,7 +17,7 @@
 /* @flow */
 import React from 'react';
 import { createStyledComponent } from '../../../../styles';
-import Heading from '../../Heading';
+import Heading from '../../SiteHeading';
 
 const styles = {
   root: {

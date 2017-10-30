@@ -18,7 +18,7 @@
 import React from 'react';
 import { createStyledComponent } from '../../../../styles';
 import Callout from '../../Callout';
-import Heading from '../../Heading';
+import Heading from '../../SiteHeading';
 import PropTable from '../../PropTable';
 import Section from '../../Section';
 

@@ -17,7 +17,7 @@
 /* @flow */
 import React from 'react';
 import { createStyledComponent } from '../../styles';
-import Link from './Link';
+import Link from './SiteLink';
 import sections from './pages';
 
 type Props = {

@@ -17,7 +17,7 @@
 /* @flow */
 import React from 'react';
 import { createStyledComponent, getNormalizedValue } from '../../styles';
-import Link from '../../Link';
+import Link from './SiteLink';
 
 type Props = {};
 

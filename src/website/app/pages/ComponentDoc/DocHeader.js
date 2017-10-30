@@ -17,8 +17,8 @@
 /* @flow */
 import React from 'react';
 import { createStyledComponent } from '../../../../styles';
-import Heading from '../../Heading';
-import Link from '../../Link';
+import Heading from '../../SiteHeading';
+import Link from '../../SiteLink';
 import Markdown from '../../Markdown';
 
 type Props = {

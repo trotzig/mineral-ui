@@ -23,8 +23,8 @@ import { createThemedComponent } from '../../../../themes';
 import Button from '../../../../Button';
 import IconArrowDropDown from '../../../../Icon/IconArrowDropDown';
 import _Popover from '../../../../Popover';
-import Heading from '../../Heading';
-import _Link from '../../Link';
+import Heading from '../../SiteHeading';
+import _Link from '../../SiteLink';
 import LogotypeHorizontal from '../../LogotypeHorizontal';
 // import { pxToEm } from './index';
 

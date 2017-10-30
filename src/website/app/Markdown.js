@@ -18,9 +18,9 @@
 import React, { createElement } from 'react';
 import marksy from 'marksy/components';
 import { createStyledComponent, getNormalizedValue } from '../../styles';
-import Heading from './Heading';
+import Heading from './SiteHeading';
 import Paragraph from './Paragraph';
-import Link from './Link';
+import Link from './SiteLink';
 import MarkdownTable from './MarkdownTable';
 import prism from './utils/prism';
 import _Label from './Label';

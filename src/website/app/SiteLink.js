@@ -17,16 +17,32 @@
 /* @flow */
 import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import _Link from '../../Link';
+import { createThemedComponent } from '../../themes';
+import Link from '../../Link';
 
 type Props = Object;
 
-export default function Link(props: Props) {
+// prettier-ignore
+const componentTheme = baseTheme => ({
+  Link_borderColor_focus: baseTheme.SiteLink_borderColor_focus || baseTheme.borderColor_focus,
+  Link_color: baseTheme.SiteLink_color || baseTheme.color_text_primary,
+  Link_color_active: baseTheme.SiteLink_color_active || baseTheme.color_text_primary_active,
+  Link_color_hover: baseTheme.SiteLink_color_hover || baseTheme.color_text_primary_hover,
+  Link_color_focus: baseTheme.SiteLink_color_focus || baseTheme.color_text_primary_focus,
+
+  ...baseTheme
+});
+
+const SiteThemedLink = createThemedComponent(Link, ({ theme }) => ({
+  ...componentTheme(theme)
+}));
+
+export default function SiteLink(props: Props) {
   const rootProps = {
     ...props
   };
   if (props.to) {
     rootProps.element = ReactRouterLink;
   }
-  return <_Link {...rootProps} />;
+  return <SiteThemedLink {...rootProps} />;
 }

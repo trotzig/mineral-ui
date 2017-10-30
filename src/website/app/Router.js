@@ -21,7 +21,7 @@ import startCase from 'lodash.startcase';
 import IconArrowBack from '../../Icon/IconArrowBack';
 import ComponentDoc from './pages/ComponentDoc';
 import ComponentDocExample from './ComponentDocExample';
-import Link from './Link';
+import Link from './SiteLink';
 import LiveProvider from './LiveProvider';
 import sections from './pages';
 

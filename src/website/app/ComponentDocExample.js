@@ -19,8 +19,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { createStyledComponent, getNormalizedValue } from '../../styles';
 import Callout from './Callout';
-import Heading from './Heading';
-import Link from './Link';
+import Heading from './SiteHeading';
+import Link from './SiteLink';
 import LiveProvider from './LiveProvider';
 import Markdown from './Markdown';
 

@@ -67,20 +67,23 @@ const rootTheme = {
   fontFamily: null,
   fontFamily_headline: `franklin-gothic-urw, ${mineralTheme.fontFamily_system}`,
 
-  // TODO: These will cause issues with future Heading component examples. Maybe
-  //       Make rename site's Heading component and its theme variables to
-  //       SiteHeading? Same treatment for Link?
-  Heading_color_3: siteColors.orange,
-  Heading_fontFamily: `franklin-gothic-urw, ${mineralTheme.fontFamily_system}`,
-  Heading_fontSize_2: pxToEm(39),
-  Heading_fontSize_2_wide: pxToEm(59),
-  Heading_fontSize_3: pxToEm(26),
-  Heading_fontSize_3_wide: pxToEm(37),
-  Heading_fontWeight_1: '300',
-  Heading_fontWeight_2: '300',
-  Heading_fontWeight_3: '300',
-  Heading_fontWeight_4: '500',
-  Heading_lineHeight: '1.1'
+  SiteHeading_color_3: siteColors.orange,
+  SiteHeading_fontFamily: `franklin-gothic-urw, ${mineralTheme.fontFamily_system}`,
+  SiteHeading_fontSize_2: pxToEm(39),
+  SiteHeading_fontSize_2_wide: pxToEm(59),
+  SiteHeading_fontSize_3: pxToEm(26),
+  SiteHeading_fontSize_3_wide: pxToEm(37),
+  SiteHeading_fontWeight_1: '300',
+  SiteHeading_fontWeight_2: '300',
+  SiteHeading_fontWeight_3: '300',
+  SiteHeading_fontWeight_4: '500',
+  SiteHeading_lineHeight: '1.1',
+
+  SiteLink_borderColor_focus: siteColors.orange_focus,
+  SiteLink_color: siteColors.orange,
+  SiteLink_color_active: siteColors.orange_active,
+  SiteLink_color_hover: siteColors.orange_hover,
+  SiteLink_color_focus: siteColors.orange_focus
 };
 
 const styles = {

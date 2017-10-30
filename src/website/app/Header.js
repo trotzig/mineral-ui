@@ -17,7 +17,7 @@
 /* @flow */
 import React from 'react';
 import { createStyledComponent } from '../../styles';
-import Link from './Link';
+import Link from './SiteLink';
 
 const Container = createStyledComponent('header', ({ theme }) => ({
   display: 'flex',

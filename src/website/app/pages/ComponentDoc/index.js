@@ -19,7 +19,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { createStyledComponent } from '../../../../styles';
 import { mineralTheme } from '../../../../themes';
-import Heading from '../../Heading';
+import Heading from '../../SiteHeading';
 import DocBestPractices from './DocBestPractices';
 import DocExamples from './DocExamples';
 import DocHeader from './DocHeader';

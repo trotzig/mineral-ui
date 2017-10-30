@@ -34,7 +34,7 @@ import {
 import _Button from '../../../../Button';
 import IconChevronRight from '../../../../Icon/IconChevronRight';
 import IconFavorite from '../../../../Icon/IconFavorite';
-import Link from '../../Link';
+import Link from '../../SiteLink';
 import Logo from '../../Logo';
 import _Markdown from '../../Markdown';
 import siteColors from '../../siteColors';
@@ -227,14 +227,14 @@ const styles = {
     '& > h3[id]': {
       margin: `0 0 ${getNormalizedValue(
         theme.baseline_6,
-        theme.Heading_fontSize_3_wide
+        theme.SiteHeading_fontSize_3_wide
       )}`,
       textAlign: 'center',
 
       [theme.bp_home_smallH3AndDown]: {
         margin: `0 0 ${getNormalizedValue(
           theme.baseline_6,
-          theme.Heading_fontSize_3
+          theme.SiteHeading_fontSize_3
         )}`
       }
     },
@@ -287,7 +287,7 @@ const styles = {
 
       '& > h4': {
         lineHeight: theme.lineHeight_prose,
-        fontWeight: theme.Heading_fontWeight_4,
+        fontWeight: theme.SiteHeading_fontWeight_4,
         margin: `0 0 ${getNormalizedValue(theme.baseline_2, theme.fontSize_h4)}`
       }
     },
@@ -420,19 +420,22 @@ const styles = {
   intro: ({ theme }) => ({
     // All of these numbers are dependent on width of h2 content
     '& h2': {
-      fontSize: theme.Heading_fontSize_2,
+      fontSize: theme.SiteHeading_fontSize_2,
       margin: `0 0 ${getNormalizedValue(
         theme.baseline_2,
-        theme.Heading_fontSize_2
+        theme.SiteHeading_fontSize_2
       )}`,
 
       [theme.bp_moreSpacious]: {
-        fontSize: theme.Heading_fontSize_2_wide,
+        fontSize: theme.SiteHeading_fontSize_2_wide,
         margin: `0 0 ${getNormalizedValue(
           theme.baseline_2,
-          theme.Heading_fontSize_2_wide
+          theme.SiteHeading_fontSize_2_wide
         )}`,
-        maxWidth: getNormalizedValue(pxToEm(396), theme.Heading_fontSize_2_wide)
+        maxWidth: getNormalizedValue(
+          pxToEm(396),
+          theme.SiteHeading_fontSize_2_wide
+        )
       },
 
       '@media(min-width: 67em)': {
@@ -458,18 +461,18 @@ const styles = {
   }),
   markdown: ({ theme }) => ({
     '& h3': {
-      fontSize: theme.Heading_fontSize_3,
+      fontSize: theme.SiteHeading_fontSize_3,
       margin: `0 0 ${getNormalizedValue(
         theme.baseline_2,
-        theme.Heading_fontSize_3
+        theme.SiteHeading_fontSize_3
       )}`,
 
       // Dependent on h3 content
       [theme.bp_home_bigH3]: {
-        fontSize: theme.Heading_fontSize_3_wide,
+        fontSize: theme.SiteHeading_fontSize_3_wide,
         margin: `0 0 ${getNormalizedValue(
           theme.baseline_2,
-          theme.Heading_fontSize_3_wide
+          theme.SiteHeading_fontSize_3_wide
         )}`
       }
     },
