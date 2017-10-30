@@ -1,7 +1,3 @@
-# Roadmap
-
-If you want to see the types of work we're doing, what's been completed and what's left to do, you've come to the right place.
-
 ## Current Sprint
 
 We are working in Agile sprints. Since all of our work is expressed in Github issues in our repo, we are able to publish our current progress and the issues that we're working on with Waffle.io. Feel free to check out what we're doing day-to-day if that's something that you find useful.

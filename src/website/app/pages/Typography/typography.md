@@ -1,8 +1,3 @@
-# Typography
-
-Mineral UI provides a simple set of typographic elements to easily apply structure to your interface.
-Using consistent typographic styles will create clear paths for users to move through your application.
-
 ## Font Usage
 
 Mineral UI uses [Open Sans](https://fonts.google.com/specimen/Open+Sans), a humanist sans-serif typeface with good legibility and warmth.

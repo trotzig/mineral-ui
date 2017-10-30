@@ -17,33 +17,16 @@
 /* @flow */
 import React from 'react';
 import { createStyledComponent } from '../../../../styles';
-import Heading from '../../SiteHeading';
 import Link from '../../SiteLink';
-import Markdown from '../../Markdown';
 
 type Props = {
   bestPractices?: Array<Object>,
-  children?: string,
-  className?: string,
   examples?: Array<any>,
   props?: boolean,
-  title: string,
   whenHowToUse?: string
 };
 
 const styles = {
-  header: ({ theme }) => ({
-    marginBottom: theme.space_stack_xl,
-    paddingTop: theme.space_stack_md
-  }),
-  lede: ({ theme }) => ({
-    fontSize: theme.fontSize_h3,
-    lineHeight: theme.lineHeight_prose,
-    margin: '0',
-    '& p': {
-      marginBottom: theme.space_stack_md
-    }
-  }),
   navElement: ({ theme }) => ({
     display: 'inline-block',
     marginRight: theme.space_inline_lg,
@@ -55,27 +38,18 @@ const styles = {
     borderBottom: `1px solid ${theme.borderColor}`,
     marginTop: theme.space_stack_md,
     marginBottom: 0
-  }),
-  title: ({ theme }) => ({
-    marginRight: 'auto',
-    paddingRight: theme.space_inline_sm
   })
 };
 
-const Root = createStyledComponent('header', styles.header);
-const Lede = createStyledComponent(Markdown, styles.lede);
+const Root = createStyledComponent('nav', styles.subnav);
 const NavElement = createStyledComponent(Link, styles.navElement);
-const SubNav = createStyledComponent('nav', styles.subnav);
-const Title = createStyledComponent(Heading, styles.title);
 
-export default function DocHeader({
+export default function DocSubNav({
   bestPractices,
-  children,
-  className,
   examples,
   props,
-  title,
-  whenHowToUse
+  whenHowToUse,
+  ...restProps
 }: Props) {
   // there is no Examples h2, so we just link to the first example.
   let firstExampleId = 'examples';
@@ -108,11 +82,5 @@ export default function DocHeader({
     );
   }
 
-  return (
-    <Root className={className}>
-      <Title level={1}>{title}</Title>
-      <Lede>{children}</Lede>
-      {navElements.length > 1 && <SubNav>{navElements}</SubNav>}
-    </Root>
-  );
+  return navElements.length > 1 && <Root {...restProps}>{navElements}</Root>;
 }

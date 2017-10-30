@@ -16,23 +16,14 @@
 
 /* @flow */
 import React from 'react';
-import Helmet from 'react-helmet';
-import { createStyledComponent } from '../../../../styles';
 import { mineralTheme } from '../../../../themes';
 import Heading from '../../SiteHeading';
 import DocBestPractices from './DocBestPractices';
 import DocExamples from './DocExamples';
-import DocHeader from './DocHeader';
 import DocProps from './DocProps';
+import DocSubNav from './DocSubNav';
 import DocThemeVariables from './DocThemeVariables';
 import DocWhenHowToUse from './DocWhenHowToUse';
-
-type BestPractice = {
-  type: string,
-  title: string,
-  example: React$Node,
-  description: string
-};
 
 type Props = {
   bestPractices?: Array<BestPractice>,
@@ -50,37 +41,35 @@ type Props = {
   whenHowToUse?: string
 };
 
-type Theme = (theme: Object) => Object;
+type BestPractice = {
+  type: string,
+  title: string,
+  example: React$Node,
+  description: string
+};
 
-const Root = createStyledComponent(
-  'div',
-  ({ theme }) => ({
-    fontFamily: theme.fontFamily_system
-  }),
-  {
-    includeStyleReset: true
-  }
-);
+type Theme = (theme: Object) => Object;
 
 export default function ComponentDoc({
   bestPractices,
-  className,
   doc,
   examples,
   hidePropDoc,
   componentTheme,
-  pageMeta,
   title,
-  whenHowToUse
+  whenHowToUse,
+  ...restProps
 }: Props) {
   const { props: propDoc } = doc;
-  const headerProps = {
+  const subNavProps = {
     bestPractices,
     componentTheme,
     examples,
     props: !!(propDoc || componentTheme),
-    title,
     whenHowToUse
+  };
+  const rootProps = {
+    ...restProps
   };
   const propProps = { propDoc, title };
   const themeVariablesProps = {
@@ -90,12 +79,8 @@ export default function ComponentDoc({
   };
 
   return (
-    <Root className={className}>
-      <Helmet>
-        <title>{pageMeta.title}</title>
-        <link rel="canonical" href={pageMeta.canonicalLink} />
-      </Helmet>
-      <DocHeader {...headerProps}>{doc.description}</DocHeader>
+    <div {...rootProps}>
+      <DocSubNav {...subNavProps} />
       {examples && <DocExamples examples={examples} />}
       {!hidePropDoc && <DocProps {...propProps} />}
       {componentTheme && <DocThemeVariables {...themeVariablesProps} />}
@@ -106,6 +91,6 @@ export default function ComponentDoc({
       )}
       {whenHowToUse && <DocWhenHowToUse content={whenHowToUse} />}
       {bestPractices && <DocBestPractices practices={bestPractices} />}
-    </Root>
+    </div>
   );
 }

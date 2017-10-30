@@ -16,7 +16,7 @@
 
 /* @flow */
 import React from 'react';
-import { createStyledComponent, pxToEm } from '../../../../styles';
+import { createStyledComponent } from '../../../../styles';
 
 type Props = {
   angles?: Array<number>,
@@ -31,8 +31,6 @@ const styles = {
   }),
   inner: ({ angles, clipColor, point, theme }) => {
     const clipBottomEdge = angles[0] > 0;
-    const paddingHorizontal = pxToEm(30);
-    const paddingHorizontalWide = pxToEm(100);
     const paddingVertical = theme.baseline_6;
     const paddingVerticalWide = theme.baseline_10;
     const paddingWithClip = `${parseFloat(theme.baseline_6) +
@@ -53,15 +51,15 @@ const styles = {
         margin: '0 auto',
         maxWidth: '80em',
         paddingBottom,
-        paddingLeft: paddingHorizontal,
-        paddingRight: paddingHorizontal,
+        paddingLeft: theme.SectionPaddingHorizontal,
+        paddingRight: theme.SectionPaddingHorizontal,
         paddingTop,
         position: 'relative',
 
         [theme.bp_moreSpacious]: {
           paddingBottom: paddingBottomWide,
-          paddingLeft: paddingHorizontalWide,
-          paddingRight: paddingHorizontalWide,
+          paddingLeft: theme.SectionPaddingHorizontalWide,
+          paddingRight: theme.SectionPaddingHorizontalWide,
           paddingTop: paddingTopWide
         }
       }

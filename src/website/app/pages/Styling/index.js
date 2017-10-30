@@ -16,21 +16,11 @@
 
 /* @flow */
 import React from 'react';
-import GuidelinePage from '../../GuidelinePage';
 import Markdown from '../../Markdown';
 import content from './styling.md';
 
-type Props = {
-  pageMeta: {
-    title: string,
-    canonicalLink: string
-  }
-};
+type Props = {};
 
 export default function Theming(props: Props) {
-  return (
-    <GuidelinePage {...props}>
-      <Markdown>{content}</Markdown>
-    </GuidelinePage>
-  );
+  return <Markdown {...props}>{content}</Markdown>;
 }

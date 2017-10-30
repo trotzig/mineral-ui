@@ -1,8 +1,3 @@
-# Theming
-
-Theming is a core concept in Mineral UI.  Themes provide a consistent look and feel across pages with varied functionality.  Mineral UI makes it simple to implement and maintain theming across your app.
-
-
 ## Common Scenarios
 
 ### Theme your entire app

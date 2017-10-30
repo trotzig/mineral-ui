@@ -17,7 +17,6 @@
 /* @flow */
 import React from 'react';
 import dedent from 'dedent';
-import Helmet from 'react-helmet';
 import {
   LiveProvider as ReactLiveProvider,
   LiveEditor,
@@ -31,10 +30,6 @@ type Props = {
   backgroundColor?: string,
   chromeless?: boolean,
   hideSource?: boolean,
-  pageMeta?: {
-    title: string,
-    canonicalLink: string
-  },
   scope: Object,
   source: string
 };
@@ -89,31 +84,21 @@ export default function LiveProvider({
   backgroundColor,
   chromeless,
   hideSource,
-  pageMeta,
   scope,
   source
 }: Props) {
   return (
-    <div>
-      {pageMeta && (
-        <Helmet>
-          <title>{pageMeta.title}</title>
-          <link rel="canonical" href={pageMeta.canonicalLink} />
-        </Helmet>
-      )}
-      {/* Undo any site theme customization */}
-      <ThemeProvider>
-        <ReactLiveProvider
-          code={dedent(source)}
-          scope={scope}
-          mountStylesheet={false}>
-          <MyLivePreview
-            backgroundColor={backgroundColor}
-            chromeless={chromeless}
-          />
-          {!hideSource && [<MyLiveEditor key={0} />, <MyLiveError key={1} />]}
-        </ReactLiveProvider>
-      </ThemeProvider>
-    </div>
+    <ThemeProvider>
+      <ReactLiveProvider
+        code={dedent(source)}
+        scope={scope}
+        mountStylesheet={false}>
+        <MyLivePreview
+          backgroundColor={backgroundColor}
+          chromeless={chromeless}
+        />
+        {!hideSource && [<MyLiveEditor key={0} />, <MyLiveError key={1} />]}
+      </ReactLiveProvider>
+    </ThemeProvider>
   );
 }

@@ -16,7 +16,6 @@
 
 /* @flow */
 import React from 'react';
-import Helmet from 'react-helmet';
 import { createStyledComponent, getNormalizedValue } from '../../styles';
 import Callout from './Callout';
 import Heading from './SiteHeading';
@@ -29,10 +28,6 @@ type Props = {
   description?: React$Node,
   hideSource?: boolean,
   id: string,
-  pageMeta?: {
-    title: string,
-    canonicalLink: string
-  },
   scope: Object,
   source: string,
   title?: React$Node
@@ -73,7 +68,6 @@ export default function ComponentDocExample({
   description,
   hideSource,
   id,
-  pageMeta,
   scope,
   source,
   title,
@@ -89,12 +83,6 @@ export default function ComponentDocExample({
 
   return (
     <Root {...rootProps}>
-      {pageMeta && (
-        <Helmet>
-          <title>{pageMeta.title}</title>
-          <link rel="canonical" href={pageMeta.canonicalLink} />
-        </Helmet>
-      )}
       <Title level={3} id={id}>
         <TitleLink to={id}>{title}</TitleLink>
       </Title>

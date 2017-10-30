@@ -1,8 +1,3 @@
-# Color
-
-Mineral UI color provides themes built on inspiring hues and grounded in usable grays.
-Mineral UI is committed to providing an easy path to creating accessible palettes and themes.
-
 ## Guidelines
 
 Color is used to establish focal points or highlight important information.

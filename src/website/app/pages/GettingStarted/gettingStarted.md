@@ -1,12 +1,3 @@
-# Getting Started
-
-Mineral UI helps you quickly build React apps with high-quality, accessible components.
-Use npm or yarn to get components and themes that have been tested across modern browsers.
-
-Below are a few simple steps to apply consistent styling and hierarchy to your app,
-so you can focus on solving business problems.
-Mineral UI is an open source project and welcomes all contributions.
-
 ## Installation
 
 Install the [Mineral UI package](https://www.npmjs.com/package/mineral-ui):

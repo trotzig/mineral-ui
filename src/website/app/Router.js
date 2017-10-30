@@ -16,18 +16,33 @@
 
 /* @flow */
 import React from 'react';
+import Helmet from 'react-helmet';
 import { Route, Switch } from 'react-router-dom';
 import startCase from 'lodash.startcase';
 import IconArrowBack from '../../Icon/IconArrowBack';
-import ComponentDoc from './pages/ComponentDoc';
 import ComponentDocExample from './ComponentDocExample';
-import Link from './SiteLink';
 import LiveProvider from './LiveProvider';
+import Page from './Page';
+import Link from './SiteLink';
 import sections from './pages';
+import ComponentDoc from './pages/ComponentDoc';
 
 type Props = {
   demos: Object
 };
+
+const HelmetItems = ({
+  canonicalLink,
+  title
+}: {
+  canonicalLink: string,
+  title: string
+}) => (
+  <Helmet>
+    <link rel="canonical" href={canonicalLink} />
+    <title>{title}</title>
+  </Helmet>
+);
 
 export default function Router({ demos }: Props) {
   const routes = sections
@@ -46,7 +61,15 @@ export default function Router({ demos }: Props) {
               title: `${page.title} | Mineral UI`,
               canonicalLink: `https://mineral-ui.com${page.path}`
             };
-            return <page.component pageMeta={pageMeta} />;
+            return (
+              <Page headerContent={page.intro} type="Guidelines">
+                <HelmetItems
+                  canonicalLink={pageMeta.canonicalLink}
+                  title={pageMeta.title}
+                />
+                <page.component />
+              </Page>
+            );
           }}
         />
       );
@@ -72,21 +95,31 @@ export default function Router({ demos }: Props) {
           };
 
           return chromeless ? (
-            <LiveProvider
-              hideSource
-              chromeless
-              pageMeta={pageMeta}
-              scope={selectedExample.scope}
-              source={selectedExample.source}
-            />
-          ) : (
             <div>
+              <HelmetItems
+                canonicalLink={pageMeta.canonicalLink}
+                title={pageMeta.title}
+              />
+              <LiveProvider
+                hideSource
+                chromeless
+                pageMeta={pageMeta}
+                scope={selectedExample.scope}
+                source={selectedExample.source}
+              />
+            </div>
+          ) : (
+            <Page type="Component">
+              <HelmetItems
+                canonicalLink={pageMeta.canonicalLink}
+                title={pageMeta.title}
+              />
               <Link to="../">
                 <IconArrowBack color="currentColor" size="small" />{' '}
                 {selectedDemo.title}
               </Link>
               <ComponentDocExample pageMeta={pageMeta} {...selectedExample} />
-            </div>
+            </Page>
           );
         }}
       />
@@ -99,7 +132,18 @@ export default function Router({ demos }: Props) {
             title: `${selectedDemo.title} | Mineral UI`,
             canonicalLink: `https://mineral-ui.com/components/${selectedDemo.title.toLowerCase()}`
           };
-          return <ComponentDoc {...selectedDemo} pageMeta={pageMeta} />;
+          const headerContent = `# ${selectedDemo.title}
+
+${selectedDemo.doc.description}`;
+          return (
+            <Page headerContent={headerContent} type="Component">
+              <HelmetItems
+                canonicalLink={pageMeta.canonicalLink}
+                title={pageMeta.title}
+              />
+              <ComponentDoc {...selectedDemo} pageMeta={pageMeta} />
+            </Page>
+          );
         }}
       />
     </Switch>

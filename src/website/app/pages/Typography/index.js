@@ -26,16 +26,10 @@ import {
   TableRow
 } from '../../Table';
 import FontDemo from './FontDemo';
-import GuidelinePage from '../../GuidelinePage';
 import content from './typography.md';
 import examples from './examples';
 
-type Props = {
-  pageMeta: {
-    title: string,
-    canonicalLink: string
-  }
-};
+type Props = {};
 
 const a11yColor = color => {
   const a11y = colorable({
@@ -85,7 +79,7 @@ const ValueCell = createStyledComponent(TableCell, styles.valueCell);
 
 export default function Typography(props: Props) {
   return (
-    <GuidelinePage {...props}>
+    <div {...props}>
       <Markdown scope={{ FontDemo }}>{content}</Markdown>
       {examples.map((section, index) => {
         return (
@@ -125,6 +119,6 @@ export default function Typography(props: Props) {
           </section>
         );
       })}
-    </GuidelinePage>
+    </div>
   );
 }

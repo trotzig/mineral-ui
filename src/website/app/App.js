@@ -29,6 +29,7 @@ import siteColors from './siteColors';
 import createKeyMap from './utils/createKeyMap';
 import ComponentDoc from './pages/ComponentDoc';
 import Home from './pages/Home';
+import triangles from './pages/Home/triangles';
 
 declare var GOOGLE_TRACKING_ID: string;
 
@@ -63,9 +64,14 @@ const rootTheme = {
     '@media(min-width: 48em) and (max-width: 60.999em)',
   bp_home_guidelinesMultiColumn: '@media(min-width: 61em)',
 
+  sidebarWidth: pxToEm(256),
+
   color_text: siteColors.slate_active,
   fontFamily: null,
   fontFamily_headline: `franklin-gothic-urw, ${mineralTheme.fontFamily_system}`,
+
+  SectionPaddingHorizontal: pxToEm(30),
+  SectionPaddingHorizontalWide: pxToEm(100),
 
   SiteHeading_color_3: siteColors.orange,
   SiteHeading_fontFamily: `franklin-gothic-urw, ${mineralTheme.fontFamily_system}`,
@@ -85,33 +91,28 @@ const rootTheme = {
   SiteLink_color_hover: siteColors.orange_hover,
   SiteLink_color_focus: siteColors.orange_focus
 };
+const navTheme = {
+  color_text: mineralTheme.color_white,
+
+  Heading_color_4: mineralTheme.color_white,
+
+  Link_color: siteColors.slate,
+  Link_color_active: siteColors.slate_active,
+  Link_color_focus: siteColors.slate_focus,
+  Link_color_hover: siteColors.slate_hover
+};
 
 const styles = {
   app: ({ theme }) => ({
     fontFamily: theme.fontFamily_system
   }),
   nav: ({ theme }) => ({
-    backgroundColor: theme.color_gray_10,
-    border: `0 solid ${theme.borderColor}`,
-    borderBottomWidth: '1px',
-
-    '@media(min-width: 45em)': {
-      borderBottomWidth: '0',
-      borderRightWidth: '1px',
+    [theme.bp_moreSpacious]: {
       height: '100vh',
       overflow: 'auto',
       position: 'fixed',
-      width: pxToEm(256)
-    }
-  }),
-  main: ({ theme }) => ({
-    padding: theme.space_inset_md,
-
-    '@media(min-width: 45em)': {
-      marginLeft: pxToEm(256),
-      padding: `${parseFloat(theme.space_inset_sm) * 8}em
-        ${parseFloat(theme.space_inset_sm) * 16}em
-        ${parseFloat(theme.space_inset_sm) * 4}em`
+      width: theme.sidebarWidth,
+      zIndex: 2
     }
   })
 };
@@ -120,9 +121,10 @@ const Root = createStyledComponent('div', styles.app, {
   includeStyleReset: true
 });
 const Nav = createStyledComponent(_Nav, styles.nav);
-const Main = createStyledComponent('main', styles.main);
 
 class App extends Component<Props> {
+  props: Props;
+
   constructor(props) {
     super(props);
 
@@ -138,12 +140,15 @@ class App extends Component<Props> {
     }
   }
 
-  props: Props;
+  componentDidMount() {
+    triangles();
+  }
 
   componentDidUpdate(prevProps) {
     if (canUseDOM && this.props.location !== prevProps.location) {
       global.window.scrollTo(0, 0);
     }
+    triangles();
   }
 
   render() {
@@ -175,11 +180,11 @@ class App extends Component<Props> {
                   <Router demos={siteDemos} />
                 ) : (
                   <Root className={className}>
-                    <Nav demos={siteDemos} />
-                    <Main>
-                      <Router demos={siteDemos} />
-                      <Footer />
-                    </Main>
+                    <ThemeProvider theme={navTheme}>
+                      <Nav demos={siteDemos} />
+                    </ThemeProvider>
+                    <Router demos={siteDemos} />
+                    <Footer />
                   </Root>
                 );
               }}

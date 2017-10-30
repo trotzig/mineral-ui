@@ -44,7 +44,6 @@ import Header from './Header';
 import Rocks from './Rocks';
 import Section from './Section';
 import ThemePlayground from './ThemePlayground';
-import triangles from './triangles';
 import accessibility from './content/accessibility.md';
 import dropInComponents from './content/dropInComponents.md';
 import footer from './content/footer.md';
@@ -74,7 +73,7 @@ const playgroundThemes = [
   { name: 'Sky', ...createTheme('sky'), color_text: siteColors.slate }
 ];
 
-const heroTheme = {
+export const heroTheme = {
   color_text: colors.white,
 
   Button_backgroundColor_primary: siteColors.orange,
@@ -411,10 +410,6 @@ const styles = {
 
     [theme.bp_home_navCollapsedAndDown]: {
       bottom: '-14.5em' // Matches change in Header margin due to open menu
-    },
-
-    '& > svg': {
-      mixBlendMode: 'hard-light'
     }
   }),
   intro: ({ theme }) => ({
@@ -489,7 +484,6 @@ const styles = {
     transform: 'scaleX(-1)',
 
     '& > svg': {
-      mixBlendMode: 'hard-light',
       transform: 'scale(2)'
     }
   }),
@@ -603,7 +597,6 @@ export default class Home extends Component<Props, State> {
   }
 
   componentDidMount() {
-    triangles();
     this.rotateThemes(this.state.themeIndex);
   }
 

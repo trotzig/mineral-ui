@@ -17,6 +17,8 @@
 /* @flow */
 import React from 'react';
 import { createStyledComponent } from '../../styles';
+import LogotypeHorizontal from './LogotypeHorizontal';
+import Heading from './SiteHeading';
 import Link from './SiteLink';
 import sections from './pages';
 
@@ -25,39 +27,12 @@ type Props = {
 };
 
 const styles = {
-  heading: ({ theme }) => ({
-    margin: '0',
-    fontSize: theme.fontSize_h4
-  }),
-  logo: ({ theme }) => ({
-    alignItems: 'center',
-    borderBottom: `1px solid ${theme.borderColor}`,
-    display: 'flex',
-    height: 50,
-    margin: `0 0 ${theme.space_stack_md}`,
-    paddingBottom: theme.space_stack_md,
-    textDecoration: 'none',
-
-    '&:hover,&:focus': {
-      textDecoration: 'none'
-    },
-
-    '& > :first-child': {
-      display: 'block',
-      marginRight: 10,
-      borderRadius: 20,
-      width: 40,
-      height: 40,
-      backgroundColor: theme.color_white,
-      color: 'orange',
-      textAlign: 'center',
-      fontSize: '2em'
-    },
-    '& > :last-child': {
-      fontSize: theme.fontSize_h4,
-      fontWeight: theme.fontWeight_bold
-    }
-  }),
+  heading: {
+    margin: '0'
+  },
+  logo: {
+    width: 157
+  },
   list: {
     listStyle: 'none',
     paddingLeft: '0'
@@ -71,15 +46,21 @@ const styles = {
   }),
   nav: ({ theme }) => ({
     padding: theme.space_inset_md,
-    backgroundColor: theme.slate_10
+    backgroundColor: 'rgba(0,0,0,0.9)'
   })
 };
 
 const Root = createStyledComponent('nav', styles.nav);
-const Heading = createStyledComponent('h2', styles.heading);
+const SectionHeading = createStyledComponent(
+  Heading,
+  styles.heading
+).withProps({
+  as: 'h2',
+  level: 4
+});
 const List = createStyledComponent('ol', styles.list);
 const ListItem = createStyledComponent('li', styles.listItem);
-const Logo = createStyledComponent(Link, styles.logo);
+const Logo = createStyledComponent(LogotypeHorizontal, styles.logo);
 
 export default function Nav({ demos, ...restProps }: Props) {
   const rootProps = { ...restProps };
@@ -96,7 +77,7 @@ export default function Nav({ demos, ...restProps }: Props) {
   const nav = sections.map((section, index) => {
     return (
       <div key={index}>
-        <Heading>{section.heading}</Heading>
+        <SectionHeading>{section.heading}</SectionHeading>
         <List>
           {section.pages.map(page => {
             return (
@@ -114,12 +95,13 @@ export default function Nav({ demos, ...restProps }: Props) {
 
   return (
     <Root {...rootProps}>
-      <Logo to="/">
-        <span>M</span>
-        <h1>Mineral UI</h1>
-      </Logo>
+      <Link to="/">
+        <h1>
+          <Logo fill="#fff" />
+        </h1>
+      </Link>
       {nav}
-      <Heading>Components</Heading>
+      <SectionHeading>Components</SectionHeading>
       <List>{demoLinks}</List>
     </Root>
   );

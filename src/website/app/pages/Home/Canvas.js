@@ -29,7 +29,11 @@ const Root = createStyledComponent('div', {
   position: 'absolute',
   right: 'calc(-50vw + 50%)',
   top: 0,
-  zIndex: '-1'
+  zIndex: '-1',
+
+  '& > svg': {
+    mixBlendMode: 'hard-light'
+  }
 });
 
 export default function Canvas({
