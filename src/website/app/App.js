@@ -22,7 +22,7 @@ import { canUseDOM } from 'exenv';
 import { createStyledComponent, pxToEm } from '../../styles';
 import { mineralTheme, ThemeProvider } from '../../themes';
 import BaselineGrid from './BaselineGrid';
-import Footer from './Footer';
+import _Footer from './Footer';
 import _Nav from './Nav';
 import Router from './Router';
 import siteColors from './siteColors';
@@ -105,6 +105,11 @@ const styles = {
   app: ({ theme }) => ({
     fontFamily: theme.fontFamily_system
   }),
+  footer: ({ theme }) => ({
+    [theme.bp_moreSpacious]: {
+      marginLeft: theme.sidebarWidth
+    }
+  }),
   nav: ({ theme }) => ({
     [theme.bp_moreSpacious]: {
       height: '100vh',
@@ -119,6 +124,7 @@ const styles = {
 const Root = createStyledComponent('div', styles.app, {
   includeStyleReset: true
 });
+const Footer = createStyledComponent(_Footer, styles.footer);
 const Nav = createStyledComponent(_Nav, styles.nav);
 
 class App extends Component<Props> {

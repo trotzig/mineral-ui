@@ -19,7 +19,7 @@ import React from 'react';
 import { createStyledComponent } from '../../../../styles';
 import Heading from '../../SiteHeading';
 import Markdown from '../../Markdown';
-import Section from '../../Section';
+import Section from './DocSection';
 import VariableTable from '../../VariableTable';
 
 type Props = {

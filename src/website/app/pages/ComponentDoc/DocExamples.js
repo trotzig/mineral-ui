@@ -17,7 +17,7 @@
 /* @flow */
 import React from 'react';
 import ComponentDocExample from '../../ComponentDocExample';
-import Section from '../../Section';
+import Section from './DocSection';
 
 type Example = {
   backgroundColor?: string,

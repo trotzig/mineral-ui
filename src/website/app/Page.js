@@ -22,11 +22,11 @@ import {
   pxToEm
 } from '../../styles';
 import { ThemeProvider } from '../../themes';
+import _Canvas from './Canvas';
 import Markdown from './Markdown';
+import _Section from './Section';
 import siteColors from './siteColors';
 import { heroTheme } from './pages/Home/index';
-import _Canvas from './pages/Home/Canvas';
-import _Section from './pages/Home/Section';
 
 type Props = {
   children: React$Node,
@@ -120,7 +120,7 @@ const styles = {
 };
 
 const Canvas = createStyledComponent(_Canvas, styles.canvas);
-const Content = createStyledComponent('div', styles.content);
+const Content = createStyledComponent('main', styles.content);
 const Section = createStyledComponent(_Section, styles.section);
 
 export default function Page({
@@ -133,7 +133,7 @@ export default function Page({
   return (
     <div {...rootProps}>
       <ThemeProvider theme={heroTheme}>
-        <Section angles={[7, 8]} point={1 / 4}>
+        <Section angles={[7, 8]} as="header" point={1 / 4}>
           <Canvas type={type} />
           {typeof headerContent === 'string' ? (
             <Markdown>{headerContent}</Markdown>

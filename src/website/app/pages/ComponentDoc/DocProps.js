@@ -20,7 +20,7 @@ import { createStyledComponent } from '../../../../styles';
 import Callout from '../../Callout';
 import Heading from '../../SiteHeading';
 import PropTable from '../../PropTable';
-import Section from '../../Section';
+import Section from './DocSection';
 
 type Props = {
   propDoc?: Object,

@@ -18,7 +18,7 @@
 import React from 'react';
 import { createStyledComponent } from '../../../../styles';
 import Heading from '../../SiteHeading';
-import Section from '../../Section';
+import Section from './DocSection';
 import DocPractice from './DocPractice';
 
 type Props = {

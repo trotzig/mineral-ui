@@ -16,7 +16,7 @@
 
 /* @flow */
 import React, { Component } from 'react';
-import { createStyledComponent } from '../../../../styles';
+import { createStyledComponent } from '../../styles';
 import triangles from './triangles';
 
 type Props = {

@@ -34,19 +34,18 @@ import {
 import _Button from '../../../../Button';
 import IconChevronRight from '../../../../Icon/IconChevronRight';
 import IconFavorite from '../../../../Icon/IconFavorite';
-import Link from '../../SiteLink';
+import Canvas from '../../Canvas';
+import Footer from '../../Footer';
 import Logo from '../../Logo';
+import Section from '../../Section';
+import Link from '../../SiteLink';
 import _Markdown from '../../Markdown';
 import siteColors from '../../siteColors';
-import Canvas from './Canvas';
-import Footer from './Footer';
 import Header from './Header';
 import Rocks from './Rocks';
-import Section from './Section';
 import ThemePlayground from './ThemePlayground';
 import accessibility from './content/accessibility.md';
 import dropInComponents from './content/dropInComponents.md';
-import footer from './content/footer.md';
 import getStarted from './content/getStarted.md';
 import guidelines from './content/guidelines.md';
 import intro from './content/intro.md';
@@ -720,9 +719,7 @@ export default class Home extends Component<Props, State> {
               </ThemeProvider>
             </GetStartedSection>
             <ThemeProvider theme={gettingStartedTheme}>
-              <Footer>
-                <Markdown>{footer}</Markdown>
-              </Footer>
+              <Footer />
             </ThemeProvider>
           </Root>
         )}
