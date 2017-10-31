@@ -31,7 +31,7 @@ import _Section from './pages/Home/Section';
 type Props = {
   children: React$Node,
   headerContent?: React$Node,
-  type?: string
+  type?: number
 };
 
 /*
@@ -41,15 +41,12 @@ type Props = {
 
 const styles = {
   canvas: ({ theme, type }) => {
-    const backgrounds = {
-      Component: siteColors.orange,
-      Customization: siteColors.yellow,
-      Guidelines: siteColors.yellow,
-      'What’s New': siteColors.slate
-    };
+    // See Router.js
+    const backgrounds = [siteColors.orange, '#85144b', '#2ECC40', '#39CCCC'];
+
     return {
       [theme.bp_moreSpacious]: {
-        backgroundColor: type ? backgrounds[type] : backgrounds['Component'],
+        backgroundColor: backgrounds[type],
         left: `calc(-50vw + 50% - ${parseFloat(theme.sidebarWidth) / 2}em)` // [1]
       }
     };
@@ -129,7 +126,7 @@ const Section = createStyledComponent(_Section, styles.section);
 export default function Page({
   children,
   headerContent,
-  type,
+  type = 0,
   ...restProps
 }: Props) {
   const rootProps = { ...restProps };

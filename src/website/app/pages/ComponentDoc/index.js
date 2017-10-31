@@ -71,6 +71,7 @@ export default function ComponentDoc({
   const rootProps = {
     ...restProps
   };
+  delete rootProps.slug;
   const propProps = { propDoc, title };
   const themeVariablesProps = {
     baseTheme: mineralTheme,

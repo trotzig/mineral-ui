@@ -46,15 +46,10 @@ const HelmetItems = ({
 
 export default function Router({ demos }: Props) {
   const routes = sections
-    .map(section => section.pages)
-    // flatten array of pages arrays
-    .reduce((acc, pages) => {
-      return [...acc, ...pages];
-    }, [])
-    .map((page, index) => {
-      return (
+    .map((section, sectionIndex) => {
+      return section.pages.map((page, pageIndex) => (
         <Route
-          key={`page-${index}`}
+          key={`page-${sectionIndex}-${pageIndex}`}
           path={page.path}
           render={() => {
             const pageMeta = {
@@ -62,7 +57,7 @@ export default function Router({ demos }: Props) {
               canonicalLink: `https://mineral-ui.com${page.path}`
             };
             return (
-              <Page headerContent={page.intro} type="Guidelines">
+              <Page headerContent={page.intro} type={sectionIndex + 1}>
                 <HelmetItems
                   canonicalLink={pageMeta.canonicalLink}
                   title={pageMeta.title}
@@ -72,8 +67,12 @@ export default function Router({ demos }: Props) {
             );
           }}
         />
-      );
-    });
+      ));
+    })
+    // Flatten array of routes arrays
+    .reduce((acc, routes) => {
+      return [...acc, ...routes];
+    }, []);
 
   return (
     <Switch>
@@ -103,13 +102,12 @@ export default function Router({ demos }: Props) {
               <LiveProvider
                 hideSource
                 chromeless
-                pageMeta={pageMeta}
                 scope={selectedExample.scope}
                 source={selectedExample.source}
               />
             </div>
           ) : (
-            <Page type="Component">
+            <Page>
               <HelmetItems
                 canonicalLink={pageMeta.canonicalLink}
                 title={pageMeta.title}
@@ -118,7 +116,7 @@ export default function Router({ demos }: Props) {
                 <IconArrowBack color="currentColor" size="small" />{' '}
                 {selectedDemo.title}
               </Link>
-              <ComponentDocExample pageMeta={pageMeta} {...selectedExample} />
+              <ComponentDocExample {...selectedExample} />
             </Page>
           );
         }}
@@ -136,12 +134,12 @@ export default function Router({ demos }: Props) {
 
 ${selectedDemo.doc.description}`;
           return (
-            <Page headerContent={headerContent} type="Component">
+            <Page headerContent={headerContent}>
               <HelmetItems
                 canonicalLink={pageMeta.canonicalLink}
                 title={pageMeta.title}
               />
-              <ComponentDoc {...selectedDemo} pageMeta={pageMeta} />
+              <ComponentDoc {...selectedDemo} />
             </Page>
           );
         }}
