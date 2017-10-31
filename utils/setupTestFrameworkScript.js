@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
+import Adapter from 'enzyme-adapter-react-16';
 import serializer from 'jest-glamor-react';
 import { simulations } from 'glamor';
 
