@@ -29,7 +29,6 @@ import siteColors from './siteColors';
 import createKeyMap from './utils/createKeyMap';
 import ComponentDoc from './pages/ComponentDoc';
 import Home from './pages/Home';
-import triangles from './pages/Home/triangles';
 
 declare var GOOGLE_TRACKING_ID: string;
 
@@ -140,15 +139,10 @@ class App extends Component<Props> {
     }
   }
 
-  componentDidMount() {
-    triangles();
-  }
-
   componentDidUpdate(prevProps) {
     if (canUseDOM && this.props.location !== prevProps.location) {
       global.window.scrollTo(0, 0);
     }
-    triangles();
   }
 
   render() {

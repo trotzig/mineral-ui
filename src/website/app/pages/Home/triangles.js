@@ -983,7 +983,7 @@ FSS.SVGRenderer.prototype = Object.create(FSS.Renderer.prototype);
 
 FSS.SVGRenderer.prototype.setSize = function(width, height) {
   FSS.Renderer.prototype.setSize.call(this, width, height);
-  this.symbol.setAttribute('viewbox', `0 0 ${width} ${height}`);
+  this.symbol.setAttribute('viewbox', `0 0 ${width} 875`); // TODO: 875 -> `${height}`
   return this;
 };
 
@@ -1085,7 +1085,7 @@ export default function triangles(xPos = 100, yPos = 300) {
     createMesh();
     addLight();
     addEventListeners();
-    resize(container.offsetWidth, container.offsetHeight);
+    resize(container.offsetWidth, 875); // TODO: 875 -> `container.offsetHeight`
     animate();
     moveLight();
   }
@@ -1100,8 +1100,8 @@ export default function triangles(xPos = 100, yPos = 300) {
       output.removeChild(renderer.element);
     }
     renderer = svgRenderer;
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-    setInstanceSizes(container.offsetWidth, container.offsetHeight);
+    renderer.setSize(container.offsetWidth, 875); // TODO: 875 -> `container.offsetHeight`
+    setInstanceSizes(container.offsetWidth, 875); // TODO: 875 -> `container.offsetHeight`
     output.appendChild(renderer.element);
   }
 
@@ -1163,7 +1163,7 @@ export default function triangles(xPos = 100, yPos = 300) {
   // Resize canvas
   function resize(width, height) {
     renderer.setSize(width, height);
-    setInstanceSizes(container.offsetWidth, container.offsetHeight);
+    setInstanceSizes(container.offsetWidth, 875); // TODO: 875 -> `container.offsetHeight`
     FSS.Vector3.set(center, renderer.halfWidth, renderer.halfHeight);
     createMesh();
   }
@@ -1202,7 +1202,7 @@ export default function triangles(xPos = 100, yPos = 300) {
   //------------------------------
 
   var onWindowResize = debounce(function() {
-    resize(container.offsetWidth, container.offsetHeight);
+    resize(container.offsetWidth, 875); // TODO: 875 -> `container.offsetHeight`
     render();
   }, 25);
 
