@@ -16,6 +16,7 @@
 
 /* @flow */
 import React from 'react';
+import Helmet from 'react-helmet';
 import {
   createStyledComponent,
   getNormalizedValue,
@@ -31,6 +32,10 @@ import { heroTheme } from './pages/Home/index';
 type Props = {
   children: React$Node,
   headerContent?: React$Node,
+  pageMeta?: {
+    canonicalLink?: string,
+    title?: string
+  },
   type?: number
 };
 
@@ -57,6 +62,19 @@ const styles = {
     [theme.bp_moreSpacious]: {
       marginLeft: theme.sidebarWidth,
       padding: `0 ${theme.SectionPaddingHorizontalWide}`
+    },
+
+    // Need to target the first `p`s within the Markdown component, up until
+    // anything that isn't a `p`. Some pages have a wrapping `div` between
+    // Content and Markdown
+    '& > .markdown, & > div > .markdown': {
+      '& > p': {
+        fontSize: pxToEm(20)
+      },
+
+      '& > :not(p) + p': {
+        fontSize: theme.fontSize_prose
+      }
     }
   }),
   section: ({ point, theme }) => ({
@@ -126,22 +144,31 @@ const Section = createStyledComponent(_Section, styles.section);
 export default function Page({
   children,
   headerContent,
+  pageMeta,
   type = 0,
   ...restProps
 }: Props) {
   const rootProps = { ...restProps };
   return (
     <div {...rootProps}>
-      <ThemeProvider theme={heroTheme}>
-        <Section angles={[7, 8]} as="header" point={1 / 4}>
-          <Canvas type={type} />
-          {typeof headerContent === 'string' ? (
-            <Markdown>{headerContent}</Markdown>
-          ) : (
-            headerContent
-          )}
-        </Section>
-      </ThemeProvider>
+      {pageMeta && (
+        <Helmet>
+          <link rel="canonical" href={pageMeta.canonicalLink} />
+          <title>{pageMeta.title}</title>
+        </Helmet>
+      )}
+      {headerContent && (
+        <ThemeProvider theme={heroTheme}>
+          <Section angles={[7, 8]} as="header" point={1 / 4}>
+            <Canvas type={type} />
+            {typeof headerContent === 'string' ? (
+              <Markdown>{headerContent}</Markdown>
+            ) : (
+              headerContent
+            )}
+          </Section>
+        </ThemeProvider>
+      )}
       <Content>{children}</Content>
     </div>
   );

@@ -30,6 +30,7 @@ const REGEX_LABEL_DELIMITER = /\s*~\s*/;
 type Props = {
   anchors?: boolean,
   children: React$Node,
+  className?: string,
   scope?: {
     [string]: React$ComponentType<*>
   }
@@ -198,10 +199,14 @@ function isNormalLink(url) {
 export default function Markdown({
   anchors = true,
   children,
+  className,
   scope,
   ...restProps
 }: Props) {
-  const rootProps = { ...restProps };
+  const rootProps = {
+    className: className ? `markdown ${className}` : 'markdown',
+    ...restProps
+  };
 
   const compile = marksy({
     createElement,

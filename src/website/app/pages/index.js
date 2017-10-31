@@ -45,32 +45,16 @@ const sections: Array<Section> = [
     pages: [
       {
         component: GettingStarted,
-        intro: `# Getting Started
-
-Mineral UI helps you quickly build React apps with high-quality, accessible components.
-Use npm or yarn to get components and themes that have been tested across modern browsers.
-
-Below are a few simple steps to apply consistent styling and hierarchy to your app,
-so you can focus on solving business problems.
-Mineral UI is an open source project and welcomes all contributions.`,
         path: '/getting-started',
         title: 'Getting Started'
       },
       {
         component: Color,
-        intro: `# Color
-
-Mineral UI color provides themes built on inspiring hues and grounded in usable grays.
-Mineral UI is committed to providing an easy path to creating accessible palettes and themes.`,
         path: '/color',
         title: 'Color'
       },
       {
         component: Typography,
-        intro: `# Typography
-
-Mineral UI provides a simple set of typographic elements to easily apply structure to your interface.
-Using consistent typographic styles will create clear paths for users to move through your application.`,
         path: '/typography',
         title: 'Typography'
       }
@@ -81,20 +65,11 @@ Using consistent typographic styles will create clear paths for users to move th
     pages: [
       {
         component: ComponentStatus,
-        intro: `# Component Status
-
-Check back here anytime to see current component status information.
-If you have a suggestion for a new component not listed here, [create an issue on GitHub](https://github.com/mineral-ui/mineral-ui/issues) to let us know!
-
-See more detailed progress on our [Waffle.io board](https://waffle.io/mineral-ui/mineral-ui).`,
         path: '/component-status',
         title: 'Component Status'
       },
       {
         component: Roadmap,
-        intro: `# Roadmap
-
-If you want to see the types of work we're doing, what's been completed and what's left to do, you've come to the right place.`,
         path: '/roadmap',
         title: 'Roadmap'
       }
@@ -105,17 +80,11 @@ If you want to see the types of work we're doing, what's been completed and what
     pages: [
       {
         component: Styling,
-        intro: `# Styling
-
-Mineral UI is built on a design system with styles ready to go out of the box.  We realize however that there will be cases when you need to customize styles for your unique needs.  Below are some different techniques for customizing Mineral UI styles across all levels of your application.`,
         path: '/styling',
         title: 'Styling'
       },
       {
         component: Theming,
-        intro: `# Theming
-
-Theming is a core concept in Mineral UI.  Themes provide a consistent look and feel across pages with varied functionality.  Mineral UI makes it simple to implement and maintain theming across your app.`,
         path: '/theming',
         title: 'Theming'
       }

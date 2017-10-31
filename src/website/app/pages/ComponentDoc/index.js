@@ -20,6 +20,7 @@ import { mineralTheme } from '../../../../themes';
 import Heading from '../../SiteHeading';
 import DocBestPractices from './DocBestPractices';
 import DocExamples from './DocExamples';
+import DocIntro from './DocIntro';
 import DocProps from './DocProps';
 import DocSubNav from './DocSubNav';
 import DocThemeVariables from './DocThemeVariables';
@@ -81,6 +82,7 @@ export default function ComponentDoc({
 
   return (
     <div {...rootProps}>
+      {doc.description && <DocIntro>{doc.description}</DocIntro>}
       <DocSubNav {...subNavProps} />
       {examples && <DocExamples examples={examples} />}
       {!hidePropDoc && <DocProps {...propProps} />}
