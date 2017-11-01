@@ -604,33 +604,51 @@ export default class Home extends Component<Props, State> {
 
     return (
       <Media query="(min-width: 39em)">
-        {matches => (
+        {navExpanded => (
           <Root>
             <ThemeProvider theme={heroTheme}>
-              <Hero
-                angles={matches ? [7, 8] : [5, 5]}
-                point={matches ? 1 / 4 : 1 / 1000}>
-                <HeroCanvas />
-                <Header latestPost={latestPost} />
-                {latestPost &&
-                  matches && (
-                    <BlogLink href={latestPost.url}>
-                      {latestPost.title}
-                      <IconChevronRight size="large" />
-                    </BlogLink>
-                  )}
-                <Intro>{intro}</Intro>
-                <Buttons>
-                  <LinkButton to="/getting-started" primary>
-                    Get Started
-                  </LinkButton>
-                  {matches && (
-                    <LinkButton href="https://github.com/mineral-ui/mineral-ui">
-                      View on GitHub
-                    </LinkButton>
-                  )}
-                </Buttons>
-              </Hero>
+              <Media query="(min-width: 48em)">
+                {moreSpacious => {
+                  /*
+                   * [1] These values are dependent on the width of the first
+                   *     Hero Button
+                   */
+                  let heroPoint = 1;
+                  if (navExpanded) {
+                    heroPoint = '12.25em'; // [1]
+                  }
+                  if (moreSpacious) {
+                    heroPoint = '16.75em'; // [1]
+                  }
+
+                  return (
+                    <Hero
+                      angles={navExpanded ? [7, 8] : [5, 5]}
+                      point={heroPoint}>
+                      <HeroCanvas />
+                      <Header latestPost={latestPost} />
+                      {latestPost &&
+                        navExpanded && (
+                          <BlogLink href={latestPost.url}>
+                            {latestPost.title}
+                            <IconChevronRight size="large" />
+                          </BlogLink>
+                        )}
+                      <Intro>{intro}</Intro>
+                      <Buttons>
+                        <LinkButton to="/getting-started" primary>
+                          Get Started
+                        </LinkButton>
+                        {navExpanded && (
+                          <LinkButton href="https://github.com/mineral-ui/mineral-ui">
+                            View on GitHub
+                          </LinkButton>
+                        )}
+                      </Buttons>
+                    </Hero>
+                  );
+                }}
+              </Media>
             </ThemeProvider>
             <GuidelinesSection
               angles={[5, 5]}
@@ -639,9 +657,9 @@ export default class Home extends Component<Props, State> {
                 0.2,
                 playgroundThemes[themeIndex].color_theme_60
               )}
-              point={matches ? 3 / 4 : 999 / 1000}>
+              point={navExpanded ? '75%' : '99.999%'}>
               <Media query="(min-width: 61em)">
-                {matches => <FloatingRocks showRockPile={matches} />}
+                {navExpanded => <FloatingRocks showRockPile={navExpanded} />}
               </Media>
               <Guidelines scope={{ CTALink, IconChevronRight }}>
                 {guidelines}
@@ -650,7 +668,7 @@ export default class Home extends Component<Props, State> {
             <PlaygroundSection
               angles={[5, 3]}
               index={themeIndex}
-              point={matches ? 1 / 4 : 1 / 1000}>
+              point={navExpanded ? '25%' : 1}>
               <PlaygroundCanvas index={themeIndex} />
               <ThemePlayground
                 index={themeIndex}
@@ -659,8 +677,8 @@ export default class Home extends Component<Props, State> {
                 }}
                 themes={playgroundThemes}>
                 <Media query="(min-width: 23em)">
-                  {matches => {
-                    const playgroundButtonIcon = matches ? (
+                  {navExpanded => {
+                    const playgroundButtonIcon = navExpanded ? (
                       <IconFavorite />
                     ) : (
                       undefined
@@ -696,7 +714,7 @@ export default class Home extends Component<Props, State> {
             <GetStartedSection
               angles={[-5, -5]}
               clipColor={colors.white}
-              point={1 / 2}>
+              point="50%">
               <GetStartedBackground index={themeIndex} />
               <ThemeProvider theme={gettingStartedTheme}>
                 <GetStartedContent>

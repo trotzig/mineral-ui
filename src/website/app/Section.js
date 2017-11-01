@@ -23,7 +23,7 @@ type Props = {
   as?: string,
   children: React$Node,
   clipColor?: string,
-  point?: number
+  point?: number | string
 };
 
 const styles = {
@@ -78,6 +78,10 @@ const styles = {
     const transformProperties = `translateY(
       ${clipBottomEdge ? '1em' : '-1em'}) scaleY(30)`;
 
+    const beforeWidth = typeof point === 'number' ? `${point}px` : point;
+    const afterWidth =
+      typeof point === 'number' ? `100% - ${point}px` : `100% - ${point}`;
+
     /*
      * The intersecting point of the two clipping shapes should be relative to
      * the width of the Inner, but the shapes themselves need to extend to the
@@ -94,7 +98,7 @@ const styles = {
         left: 'calc(-50vw + 50%)', // [1]
         transform: `skewY(${angles[0]}deg) ${transformProperties}`,
         transformOrigin: `${clipBottomEdge ? 'top' : 'bottom'} right`,
-        width: `calc(50vw - 50% + ${point * 100}%)` // [2]
+        width: `calc(50vw - 50% + ${beforeWidth})` // [2]
       }
     };
 
@@ -104,7 +108,7 @@ const styles = {
         right: 'calc(-50vw + 50%)', // [1]
         transform: `skewY(${-1 * angles[1]}deg) ${transformProperties}`,
         transformOrigin: `${clipBottomEdge ? 'top' : 'bottom'} left`,
-        width: `calc(50vw - 50% + ${(1 - point) * 100}%)` // [2]
+        width: `calc(50vw - 50% + ${afterWidth})` // [2]
       }
     };
 

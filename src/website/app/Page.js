@@ -40,8 +40,12 @@ type Props = {
 };
 
 /*
- * [1] The left bleed of the Section needs adjusting due to the nav sidebar.
- * See the comment on Section's styles for more info.
+ * [1] Need to target the first `p`s within the Markdown component, up until
+ *     anything that isn't a `p`. Some pages have a wrapping `div` between
+ *     Content and Markdown
+ * [2] The left bleed of the Section needs adjusting due to the nav sidebar.
+ *     Point is hardcoded to the Section padding, rather than being prop-driven.
+ *     See the comment on Section's styles for more info.
  */
 
 const styles = {
@@ -64,9 +68,7 @@ const styles = {
       padding: `0 ${theme.SectionPaddingHorizontalWide}`
     },
 
-    // Need to target the first `p`s within the Markdown component, up until
-    // anything that isn't a `p`. Some pages have a wrapping `div` between
-    // Content and Markdown
+    // [1]
     '& > .markdown, & > div > .markdown': {
       '& > p': {
         fontSize: pxToEm(20)
@@ -77,7 +79,7 @@ const styles = {
       }
     }
   }),
-  section: ({ point, theme }) => ({
+  section: ({ theme }) => ({
     // Inner
     '& > div': {
       paddingTop: theme.baseline_4,
@@ -87,9 +89,15 @@ const styles = {
         paddingBottom: theme.baseline_6,
 
         '&::before': {
-          left: `calc(-50vw + 50% - ${parseFloat(theme.sidebarWidth) / 2}em)`, // [1]
-          width: `calc(50vw - 50% + ${point * 100}% +
-            ${parseFloat(theme.sidebarWidth) / 2}em)` // [1]
+          left: `calc(-50vw + 50% - ${theme.SectionPaddingHorizontalWide} -
+            ${parseFloat(theme.sidebarWidth) / 2}em)`, // [2]
+          width: `calc(50vw - 50% + 2 * ${theme.SectionPaddingHorizontalWide} +
+            ${parseFloat(theme.sidebarWidth) / 2}em)` // [2]
+        },
+
+        '&::after': {
+          width: `calc(50vw - 50% + 100% -
+            ${theme.SectionPaddingHorizontalWide})` // [2]
         }
       }
     },
@@ -159,7 +167,7 @@ export default function Page({
       )}
       {headerContent && (
         <ThemeProvider theme={heroTheme}>
-          <Section angles={[7, 8]} as="header" point={1 / 4}>
+          <Section angles={[5, 6]} as="header" point={1 / 1000}>
             <Canvas type={type} />
             {typeof headerContent === 'string' ? (
               <Markdown>{headerContent}</Markdown>
