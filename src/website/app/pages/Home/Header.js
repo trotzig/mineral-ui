@@ -223,7 +223,7 @@ export default class Header extends Component<Props, State> {
     return (
       <Root {...rootProps}>
         <Logotype level={1}>
-          <LogotypeHorizontal fill="#fff" />
+          <LogotypeHorizontal />
         </Logotype>
         <Media query="(min-width: 39em)">
           {matches =>

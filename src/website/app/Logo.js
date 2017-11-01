@@ -23,7 +23,7 @@ type Props = {
 };
 
 export default function Logo({ fill, title = 'Mineral', ...restProps }: Props) {
-  const fillColor = fill || undefined;
+  const fillColor = fill || 'currentColor';
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

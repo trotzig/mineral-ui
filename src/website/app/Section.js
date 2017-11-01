@@ -32,20 +32,22 @@ const styles = {
   }),
   inner: ({ angles, clipColor, point, theme }) => {
     const clipBottomEdge = angles[0] > 0;
-    const paddingVertical = theme.baseline_6;
-    const paddingVerticalWide = theme.baseline_10;
     const paddingWithClip = `${parseFloat(theme.baseline_6) +
       parseFloat(theme.baseline_2)}em`;
     const paddingWithClipWide = `${parseFloat(theme.baseline_10) +
       parseFloat(theme.baseline_4)}em`;
     const paddingBottom =
-      point && clipBottomEdge ? paddingWithClip : paddingVertical;
+      point && clipBottomEdge ? paddingWithClip : theme.SectionPaddingVertical;
     const paddingBottomWide =
-      point && clipBottomEdge ? paddingWithClipWide : paddingVerticalWide;
+      point && clipBottomEdge
+        ? paddingWithClipWide
+        : theme.SectionPaddingVerticalWide;
     const paddingTop =
-      point && !clipBottomEdge ? paddingWithClip : paddingVertical;
+      point && !clipBottomEdge ? paddingWithClip : theme.SectionPaddingVertical;
     const paddingTopWide =
-      point && !clipBottomEdge ? paddingWithClipWide : paddingVerticalWide;
+      point && !clipBottomEdge
+        ? paddingWithClipWide
+        : theme.SectionPaddingVerticalWide;
 
     const styles = [
       {

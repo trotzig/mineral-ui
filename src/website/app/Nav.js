@@ -17,7 +17,7 @@
 /* @flow */
 import React from 'react';
 import { createStyledComponent } from '../../styles';
-import LogotypeHorizontal from './LogotypeHorizontal';
+import _Logo from './Logo';
 import Heading from './SiteHeading';
 import Link from './SiteLink';
 import sections from './pages';
@@ -27,27 +27,28 @@ type Props = {
 };
 
 const styles = {
-  heading: {
-    margin: '0'
-  },
+  heading: ({ theme }) => ({
+    margin: `0 0 ${theme.baseline_1}`
+  }),
   logo: {
-    width: 157
+    width: 32
   },
-  list: {
+  list: ({ theme }) => ({
     listStyle: 'none',
+    margin: `0 0 ${theme.baseline_4}`,
     paddingLeft: '0'
-  },
+  }),
   listItem: ({ isSubcomponent, theme }) => ({
+    fontSize: theme.fontSize_ui,
     paddingLeft: isSubcomponent && theme.space_inline_sm,
 
     '& + li': {
       marginTop: theme.space_stack_sm
     }
   }),
-  nav: ({ theme }) => ({
-    padding: theme.space_inset_md,
-    backgroundColor: 'rgba(0,0,0,0.9)'
-  })
+  nav: {
+    textAlign: 'right'
+  }
 };
 
 const Root = createStyledComponent('nav', styles.nav);
@@ -60,7 +61,7 @@ const SectionHeading = createStyledComponent(
 });
 const List = createStyledComponent('ol', styles.list);
 const ListItem = createStyledComponent('li', styles.listItem);
-const Logo = createStyledComponent(LogotypeHorizontal, styles.logo);
+const Logo = createStyledComponent(_Logo, styles.logo);
 
 export default function Nav({ demos, ...restProps }: Props) {
   const rootProps = { ...restProps };
@@ -97,7 +98,7 @@ export default function Nav({ demos, ...restProps }: Props) {
     <Root {...rootProps}>
       <Link to="/">
         <h1>
-          <Logo fill="#fff" />
+          <Logo />
         </h1>
       </Link>
       {nav}

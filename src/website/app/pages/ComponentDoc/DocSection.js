@@ -18,7 +18,9 @@
 import { createThemedComponent } from '../../../../themes';
 import Section from '../../Section';
 
-export default createThemedComponent(Section, {
+export default createThemedComponent(Section, ({ theme }) => ({
   SectionPaddingHorizontal: 0,
-  SectionPaddingHorizontalWide: 0
-});
+  SectionPaddingHorizontalWide: 0,
+  SectionPaddingVertical: theme.baseline_3,
+  SectionPaddingVerticalWide: theme.baseline_5
+}));

@@ -549,7 +549,10 @@ const GetStartedBackgrounds = createStyledComponent(
 );
 const GetStartedContent = createStyledComponent(
   'div',
-  styles.getStartedContent
+  styles.getStartedContent,
+  {
+    includeStyleReset: true
+  }
 );
 const GetStartedSection = createStyledComponent(
   Section,
@@ -718,7 +721,7 @@ export default class Home extends Component<Props, State> {
               <GetStartedBackground index={themeIndex} />
               <ThemeProvider theme={gettingStartedTheme}>
                 <GetStartedContent>
-                  <Logo fill="#fff" />
+                  <Logo />
                   <GetStarted scope={{ Logo }}>{getStarted}</GetStarted>
                   <Buttons>
                     <LinkButton to="/getting-started" primary>

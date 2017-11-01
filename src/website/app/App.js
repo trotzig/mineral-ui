@@ -63,7 +63,7 @@ const rootTheme = {
     '@media(min-width: 48em) and (max-width: 60.999em)',
   bp_home_guidelinesMultiColumn: '@media(min-width: 61em)',
 
-  sidebarWidth: pxToEm(256),
+  sidebarWidth: pxToEm(180),
 
   color_text: siteColors.slate_active,
   fontFamily: null,
@@ -71,6 +71,8 @@ const rootTheme = {
 
   SectionPaddingHorizontal: pxToEm(30),
   SectionPaddingHorizontalWide: pxToEm(100),
+  SectionPaddingVertical: pxToEm(13 * 6), // theme.baseline_6
+  SectionPaddingVerticalWide: pxToEm(13 * 10), // theme.baseline_10
 
   SiteHeading_color_3: siteColors.orange,
   SiteHeading_fontFamily: `franklin-gothic-urw, ${mineralTheme.fontFamily_system}`,
@@ -91,9 +93,7 @@ const rootTheme = {
   SiteLink_color_focus: siteColors.orange_focus
 };
 const navTheme = {
-  color_text: mineralTheme.color_white,
-
-  Heading_color_4: mineralTheme.color_white,
+  Heading_color_4: siteColors.slate,
 
   Link_color: siteColors.slate,
   Link_color_active: siteColors.slate_active,
@@ -112,10 +112,11 @@ const styles = {
   }),
   nav: ({ theme }) => ({
     [theme.bp_moreSpacious]: {
-      height: '100vh',
-      overflow: 'auto',
-      position: 'fixed',
+      // maxHeight: '100vh', // Only apply this when sticky
+      // overflow: 'auto', // Only apply this when sticky
+      position: 'absolute',
       width: theme.sidebarWidth,
+      top: 302, // Magic number to baseline align logo bottom with second line of page intro
       zIndex: 2
     }
   })

@@ -17,11 +17,7 @@
 /* @flow */
 import React from 'react';
 import Helmet from 'react-helmet';
-import {
-  createStyledComponent,
-  getNormalizedValue,
-  pxToEm
-} from '../../styles';
+import { createStyledComponent, pxToEm } from '../../styles';
 import { ThemeProvider } from '../../themes';
 import _Canvas from './Canvas';
 import Markdown from './Markdown';
@@ -65,17 +61,21 @@ const styles = {
 
     [theme.bp_moreSpacious]: {
       marginLeft: theme.sidebarWidth,
-      padding: `0 ${theme.SectionPaddingHorizontalWide}`
-    },
+      padding: `0 ${theme.SectionPaddingHorizontalWide}`,
 
-    // [1]
-    '& > .markdown, & > div > .markdown': {
-      '& > p': {
-        fontSize: pxToEm(20)
-      },
+      // [1]
+      '& > .markdown, & > div > .markdown': {
+        '& > p': {
+          fontSize: pxToEm(20),
 
-      '& > :not(p) + p': {
-        fontSize: theme.fontSize_prose
+          '&:first-child': {
+            marginTop: theme.baseline_5
+          }
+        },
+
+        '& > :not(p) ~ p': {
+          fontSize: theme.fontSize_prose
+        }
       }
     }
   }),
@@ -102,44 +102,19 @@ const styles = {
       }
     },
 
-    // TODO: All of these styles come from Home's Intro
-    '& h1': {
-      fontSize: theme.SiteHeading_fontSize_2,
-      margin: `0 0 ${getNormalizedValue(
-        theme.baseline_2,
-        theme.SiteHeading_fontSize_2
-      )}`,
-
-      [theme.bp_moreSpacious]: {
-        fontSize: theme.SiteHeading_fontSize_2_wide,
-        margin: `0 0 ${getNormalizedValue(
-          theme.baseline_2,
-          theme.SiteHeading_fontSize_2_wide
-        )}`,
-        maxWidth: getNormalizedValue(
-          pxToEm(396),
-          theme.SiteHeading_fontSize_2_wide
-        )
-      },
-
-      '@media(min-width: 67em)': {
-        maxWidth: 'none'
-      }
+    // Specificity hack
+    '& p[class]': {
+      fontSize: theme.fontSize_ui,
+      margin: 0,
+      marginBottom: theme.baseline_1
     },
 
-    '& p': {
-      [theme.bp_home_navExpanded]: {
-        maxWidth: pxToEm(396)
-      },
+    '& h1': {
+      fontSize: theme.SiteHeading_fontSize_2,
+      margin: 0,
 
       [theme.bp_moreSpacious]: {
-        fontSize: pxToEm(18)
-      },
-
-      '@media(min-width: 67em)': {
-        '&[class]': {
-          maxWidth: `${611 / 18}em`
-        }
+        fontSize: theme.SiteHeading_fontSize_2_wide
       }
     }
   })
