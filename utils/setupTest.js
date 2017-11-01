@@ -15,18 +15,10 @@
  */
 
 /* @flow */
-module.exports = {
-  coverageDirectory: 'reports/coverage',
-  coveragePathIgnorePatterns: [
-    '/node_modules/',
-    '/Icon/Icon.+.js',
-    '/website/'
-  ],
-  moduleNameMapper: {
-    '.*react-docgen-loader.*': '<rootDir>/utils/emptyObject.js',
-    '.md$': '<rootDir>/utils/emptyObject.js'
-  },
-  setupFiles: ['raf/polyfill', '<rootDir>/utils/setupTest.js'],
-  setupTestFrameworkScriptFile: '<rootDir>/utils/setupTestFrameworkScript.js',
-  snapshotSerializers: ['enzyme-to-json/serializer']
+global.document.createRange = function createRange() {
+  return {
+    commonAncestorContainer: global.document.documentElement,
+    setEnd: () => {},
+    setStart: () => {}
+  };
 };
