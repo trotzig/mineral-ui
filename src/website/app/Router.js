@@ -16,14 +16,11 @@
 
 /* @flow */
 import React from 'react';
-import Helmet from 'react-helmet';
 import { Route, Switch } from 'react-router-dom';
 import startCase from 'lodash.startcase';
-import IconArrowBack from '../../Icon/IconArrowBack';
 import ComponentDocExample from './ComponentDocExample';
-import LiveProvider from './LiveProvider';
+import Home from './pages/Home';
 import Page from './Page';
-import Link from './SiteLink';
 import sections from './pages';
 import ComponentDoc from './pages/ComponentDoc';
 
@@ -51,6 +48,7 @@ export default function Router({ demos }: Props) {
             };
             const pageProps = {
               headerContent: getPageHeader(section.heading, page.title),
+              demos,
               pageMeta,
               type: sectionIndex + 1
             };
@@ -70,6 +68,7 @@ export default function Router({ demos }: Props) {
 
   return (
     <Switch>
+      <Route path="/" exact component={Home} />
       {routes}
       <Route
         path="/components/:componentId/:exampleId"
@@ -86,27 +85,22 @@ export default function Router({ demos }: Props) {
             )} | Mineral UI`,
             canonicalLink: `https://mineral-ui.com/components/${selectedDemo.title.toLowerCase()}/${selectedExample.id}`
           };
+          const pageProps = {
+            chromeless,
+            demos,
+            pageMeta
+          };
+          const exampleProps = {
+            chromeless,
+            componentName: selectedDemo.title,
+            demos,
+            standalone: true,
+            ...selectedExample
+          };
 
-          return chromeless ? (
-            <div>
-              <Helmet>
-                <link rel="canonical" href={pageMeta.canonicalLink} />
-                <title>{pageMeta.title}</title>
-              </Helmet>
-              <LiveProvider
-                hideSource
-                chromeless
-                scope={selectedExample.scope}
-                source={selectedExample.source}
-              />
-            </div>
-          ) : (
-            <Page pageMeta={pageMeta}>
-              <Link to="../">
-                <IconArrowBack color="currentColor" size="small" />{' '}
-                {selectedDemo.title}
-              </Link>
-              <ComponentDocExample {...selectedExample} />
+          return (
+            <Page {...pageProps}>
+              <ComponentDocExample {...exampleProps} />
             </Page>
           );
         }}
@@ -121,6 +115,7 @@ export default function Router({ demos }: Props) {
             canonicalLink: `https://mineral-ui.com/components/${selectedDemo.title.toLowerCase()}`
           };
           const pageProps = {
+            demos,
             headerContent: getPageHeader('Components', selectedDemo.title),
             pageMeta
           };

@@ -19,16 +19,12 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { canUseDOM } from 'exenv';
-import { createStyledComponent, pxToEm } from '../../styles';
+import { pxToEm } from '../../styles';
 import { mineralTheme, ThemeProvider } from '../../themes';
 import BaselineGrid from './BaselineGrid';
-import _Footer from './Footer';
-import _Nav from './Nav';
 import Router from './Router';
 import siteColors from './siteColors';
 import createKeyMap from './utils/createKeyMap';
-import ComponentDoc from './pages/ComponentDoc';
-import Home from './pages/Home';
 
 declare var GOOGLE_TRACKING_ID: string;
 
@@ -40,7 +36,7 @@ type Props = {
   location?: any
 };
 
-const rootTheme = {
+const siteTheme = {
   baseline_1: pxToEm(13),
   baseline_2: pxToEm(13 * 2),
   baseline_3: pxToEm(13 * 3),
@@ -92,41 +88,6 @@ const rootTheme = {
   SiteLink_color_hover: siteColors.orange_hover,
   SiteLink_color_focus: siteColors.orange_focus
 };
-const navTheme = {
-  Heading_color_4: siteColors.slate,
-
-  Link_color: siteColors.slate,
-  Link_color_active: siteColors.slate_active,
-  Link_color_focus: siteColors.slate_focus,
-  Link_color_hover: siteColors.slate_hover
-};
-
-const styles = {
-  app: ({ theme }) => ({
-    fontFamily: theme.fontFamily_system
-  }),
-  footer: ({ theme }) => ({
-    [theme.bp_moreSpacious]: {
-      marginLeft: theme.sidebarWidth
-    }
-  }),
-  nav: ({ theme }) => ({
-    [theme.bp_moreSpacious]: {
-      // maxHeight: '100vh', // Only apply this when sticky
-      // overflow: 'auto', // Only apply this when sticky
-      position: 'absolute',
-      width: theme.sidebarWidth,
-      top: 302, // Magic number to baseline align logo bottom with second line of page intro
-      zIndex: 2
-    }
-  })
-};
-
-const Root = createStyledComponent('div', styles.app, {
-  includeStyleReset: true
-});
-const Footer = createStyledComponent(_Footer, styles.footer);
-const Nav = createStyledComponent(_Nav, styles.nav);
 
 class App extends Component<Props> {
   props: Props;
@@ -153,18 +114,14 @@ class App extends Component<Props> {
   }
 
   render() {
-    const { className, demos } = this.props;
-
-    if (!Array.isArray(demos) && demos.slug) {
-      return <ComponentDoc {...demos} />;
-    }
+    const { demos } = this.props;
 
     const siteDemos = Array.isArray(demos)
       ? createKeyMap(demos, 'slug')
       : demos;
 
     return (
-      <ThemeProvider theme={rootTheme}>
+      <ThemeProvider theme={siteTheme}>
         <div>
           <Switch>
             <Route
@@ -173,23 +130,7 @@ class App extends Component<Props> {
               path="/:url*"
               render={props => <Redirect to={`${props.location.pathname}/`} />}
             />
-            <Route path="/" exact component={Home} />
-            <Route
-              render={route => {
-                const isChromeless = route.location.search === '?chromeless';
-                return isChromeless ? (
-                  <Router demos={siteDemos} />
-                ) : (
-                  <Root className={className}>
-                    <ThemeProvider theme={navTheme}>
-                      <Nav demos={siteDemos} />
-                    </ThemeProvider>
-                    <Router demos={siteDemos} />
-                    <Footer />
-                  </Root>
-                );
-              }}
-            />
+            <Route render={() => <Router demos={siteDemos} />} />
           </Switch>
           <BaselineGrid />
         </div>

@@ -20,13 +20,17 @@ import Helmet from 'react-helmet';
 import { createStyledComponent, pxToEm } from '../../styles';
 import { ThemeProvider } from '../../themes';
 import _Canvas from './Canvas';
+import _Footer from './Footer';
 import Markdown from './Markdown';
-import _Section from './Section';
+import Section from './Section';
+import _Nav from './Nav';
 import siteColors from './siteColors';
 import { heroTheme } from './pages/Home/index';
 
 type Props = {
   children: React$Node,
+  chromeless?: boolean,
+  demos?: Object,
   headerContent?: React$Node,
   pageMeta?: {
     canonicalLink?: string,
@@ -35,13 +39,23 @@ type Props = {
   type?: number
 };
 
+const navTheme = {
+  Heading_color_4: siteColors.slate,
+
+  SiteLink_borderColor_focus: siteColors.slate_focus,
+  SiteLink_color: siteColors.slate,
+  SiteLink_color_active: siteColors.slate_active,
+  SiteLink_color_focus: siteColors.slate_focus,
+  SiteLink_color_hover: siteColors.slate_hover
+};
+
 /*
- * [1] Need to target the first `p`s within the Markdown component, up until
- *     anything that isn't a `p`. Some pages have a wrapping `div` between
- *     Content and Markdown
- * [2] The left bleed of the Section needs adjusting due to the nav sidebar.
+ * [1] The left bleed of the Section needs adjusting due to the nav sidebar.
  *     Point is hardcoded to the Section padding, rather than being prop-driven.
  *     See the comment on Section's styles for more info.
+ * [2] Need to target the first `p`s within the Markdown component, up until
+ *     anything that isn't a `p`. Some pages have a wrapping `div` between
+ *     Content and Markdown
  */
 
 const styles = {
@@ -57,13 +71,13 @@ const styles = {
     };
   },
   content: ({ theme }) => ({
-    padding: `0 ${theme.SectionPaddingHorizontal}`,
+    padding: `0 ${theme.SectionPaddingHorizontal} ${theme.baseline_3}`,
 
     [theme.bp_moreSpacious]: {
       marginLeft: theme.sidebarWidth,
-      padding: `0 ${theme.SectionPaddingHorizontalWide}`,
+      padding: `0 ${theme.SectionPaddingHorizontalWide} ${theme.baseline_6}`,
 
-      // [1]
+      // [2]
       '& > .markdown, & > div > .markdown': {
         '& > p': {
           fontSize: pxToEm(20),
@@ -79,7 +93,19 @@ const styles = {
       }
     }
   }),
-  section: ({ theme }) => ({
+  footer: ({ theme }) => ({
+    [theme.bp_moreSpacious]: {
+      clear: 'both',
+      paddingLeft: theme.sidebarWidth
+    }
+  }),
+  header: ({ theme }) => ({
+    marginBottom: theme.baseline_3,
+
+    [theme.bp_moreSpacious]: {
+      marginBottom: theme.baseline_6
+    },
+
     // Inner
     '& > div': {
       paddingTop: theme.baseline_4,
@@ -90,14 +116,14 @@ const styles = {
 
         '&::before': {
           left: `calc(-50vw + 50% - ${theme.SectionPaddingHorizontalWide} -
-            ${parseFloat(theme.sidebarWidth) / 2}em)`, // [2]
+            ${parseFloat(theme.sidebarWidth) / 2}em)`, // [1]
           width: `calc(50vw - 50% + 2 * ${theme.SectionPaddingHorizontalWide} +
-            ${parseFloat(theme.sidebarWidth) / 2}em)` // [2]
+            ${parseFloat(theme.sidebarWidth) / 2}em)` // [1]
         },
 
         '&::after': {
           width: `calc(50vw - 50% + 100% -
-            ${theme.SectionPaddingHorizontalWide})` // [2]
+            ${theme.SectionPaddingHorizontalWide})` // [1]
         }
       }
     },
@@ -117,42 +143,72 @@ const styles = {
         fontSize: theme.SiteHeading_fontSize_2_wide
       }
     }
+  }),
+  nav: ({ theme }) => ({
+    [theme.bp_moreSpacious]: {
+      float: 'left',
+      maxHeight: '100vh',
+      overflow: 'auto',
+      position: 'sticky',
+      top: 10,
+      width: theme.sidebarWidth
+    }
+  }),
+  root: ({ theme }) => ({
+    fontFamily: theme.fontFamily_system
   })
 };
 
+const Root = createStyledComponent('div', styles.root, {
+  includeStyleReset: true
+});
 const Canvas = createStyledComponent(_Canvas, styles.canvas);
 const Content = createStyledComponent('main', styles.content);
-const Section = createStyledComponent(_Section, styles.section);
+const Footer = createStyledComponent(_Footer, styles.footer);
+const Nav = createStyledComponent(_Nav, styles.nav);
+const Header = createStyledComponent(Section, styles.header);
 
 export default function Page({
   children,
+  chromeless,
+  demos,
   headerContent,
   pageMeta,
   type = 0,
   ...restProps
 }: Props) {
   const rootProps = { ...restProps };
-  return (
-    <div {...rootProps}>
-      {pageMeta && (
-        <Helmet>
-          <link rel="canonical" href={pageMeta.canonicalLink} />
-          <title>{pageMeta.title}</title>
-        </Helmet>
-      )}
+  const helmetItems = pageMeta && (
+    <Helmet>
+      <link rel="canonical" href={pageMeta.canonicalLink} />
+      <title>{pageMeta.title}</title>
+    </Helmet>
+  );
+  return chromeless ? (
+    <div>
+      {helmetItems}
+      {children}
+    </div>
+  ) : (
+    <Root {...rootProps}>
+      {helmetItems}
       {headerContent && (
         <ThemeProvider theme={heroTheme}>
-          <Section angles={[5, 6]} as="header" point={1 / 1000}>
+          <Header angles={[5, 6]} as="header" point={1 / 1000}>
             <Canvas type={type} />
             {typeof headerContent === 'string' ? (
               <Markdown>{headerContent}</Markdown>
             ) : (
               headerContent
             )}
-          </Section>
+          </Header>
         </ThemeProvider>
       )}
+      <ThemeProvider theme={navTheme}>
+        <Nav demos={demos} />
+      </ThemeProvider>
       <Content>{children}</Content>
-    </div>
+      <Footer />
+    </Root>
   );
 }

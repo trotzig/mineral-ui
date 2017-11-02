@@ -15,12 +15,29 @@
  */
 
 /* @flow */
+import { createStyledComponent } from '../../../../styles';
 import { createThemedComponent } from '../../../../themes';
 import Section from '../../Section';
 
-export default createThemedComponent(Section, ({ theme }) => ({
+const ThemedSection = createThemedComponent(Section, ({ theme }) => ({
   SectionPaddingHorizontal: 0,
   SectionPaddingHorizontalWide: 0,
   SectionPaddingVertical: theme.baseline_3,
   SectionPaddingVerticalWide: theme.baseline_5
+}));
+
+export default createStyledComponent(ThemedSection, ({ theme }) => ({
+  // Inner
+  '& > div': {
+    paddingBottom: 0,
+    paddingTop: 0,
+
+    '& + &': {
+      paddingTop: theme.SectionPaddingVertical,
+
+      [theme.bp_moreSpacious]: {
+        paddingTop: theme.SectionPaddingVerticalWide
+      }
+    }
+  }
 }));

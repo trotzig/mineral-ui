@@ -17,6 +17,7 @@
 /* @flow */
 import React from 'react';
 import { createStyledComponent, getNormalizedValue } from '../../styles';
+import IconArrowBack from '../../Icon/IconArrowBack';
 import Callout from './Callout';
 import Heading from './SiteHeading';
 import Link from './SiteLink';
@@ -25,17 +26,21 @@ import Markdown from './Markdown';
 
 type Props = {
   backgroundColor?: string,
+  chromeless?: boolean,
+  componentName?: string,
   description?: React$Node,
   hideSource?: boolean,
   id: string,
   scope: Object,
   source: string,
+  standalone?: boolean,
   title?: React$Node
 };
 
 const styles = {
-  componentDocExample: ({ theme }) => ({
+  componentDocExample: ({ standalone, theme }) => ({
     paddingBottom: `${parseFloat(theme.space_stack_sm) * 8}em`,
+    paddingTop: standalone ? theme.baseline_6 : null,
 
     '& + &': {
       borderTop: `1px solid ${theme.borderColor}`
@@ -65,24 +70,34 @@ const TitleLink = createStyledComponent(Link, styles.titleLink);
 
 export default function ComponentDocExample({
   backgroundColor,
+  chromeless,
+  componentName,
   description,
   hideSource,
   id,
   scope,
   source,
+  standalone,
   title,
   ...restProps
 }: Props) {
-  const rootProps = { ...restProps };
+  const rootProps = { standalone, ...restProps };
   const liveProviderProps = {
     backgroundColor,
-    hideSource,
+    hideSource: chromeless || hideSource,
     scope,
     source
   };
 
-  return (
+  return standalone && chromeless ? (
+    <LiveProvider {...liveProviderProps} chromeless />
+  ) : (
     <Root {...rootProps}>
+      {standalone && (
+        <Link to="../">
+          <IconArrowBack color="currentColor" size="small" /> {componentName}
+        </Link>
+      )}
       <Title level={3} id={id}>
         <TitleLink to={id}>{title}</TitleLink>
       </Title>
