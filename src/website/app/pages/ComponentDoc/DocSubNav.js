@@ -18,6 +18,7 @@
 import React from 'react';
 import { createStyledComponent } from '../../../../styles';
 import Link from '../../SiteLink';
+import Section from './DocSection';
 
 type Props = {
   bestPractices?: Array<Object>,
@@ -29,19 +30,25 @@ type Props = {
 const styles = {
   navElement: ({ theme }) => ({
     display: 'inline-block',
-    marginRight: theme.space_inline_lg,
-    marginBottom: theme.space_stack_sm,
-    borderBottom: '3px solid transparent',
-    cursor: 'pointer'
+    marginRight: theme.space_inline_lg
   }),
   subnav: ({ theme }) => ({
-    borderBottom: `1px solid ${theme.borderColor}`,
-    marginTop: theme.space_stack_md,
-    marginBottom: 0
+    position: 'sticky',
+    top: 0,
+    zIndex: 2,
+
+    // Inner
+    '& > div': {
+      backgroundColor: theme.color_white,
+      borderBottom: `1px solid ${theme.borderColor}`,
+      padding: `${theme.baseline_1} 0`
+    }
   })
 };
 
-const Root = createStyledComponent('nav', styles.subnav);
+const Root = createStyledComponent(Section, styles.subnav).withProps({
+  as: 'nav'
+});
 const NavElement = createStyledComponent(Link, styles.navElement);
 
 export default function DocSubNav({
